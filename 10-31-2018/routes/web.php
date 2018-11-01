@@ -53,23 +53,3 @@ Route::resource('/post','PostController');
 Route::get('/organization/list','OrganizationController@showList');
 Route::get('/organization/list-data','OrganizationController@listData');
 Route::resource('/organization','OrganizationController');
-
-//Product Category
-Route::get('/product-category/list','ProductCategoryController@showList');
-Route::get('/product-category/list-data','ProductCategoryController@listData');
-Route::resource('/product-category','ProductCategoryController');
-
-//Product
-Route::get('/product/list','ProductController@showList');
-Route::get('/product/list-data','ProductController@listData');
-Route::resource('/product','ProductController');
-
-//Expert Type
-Route::get('/expert-type/list','ExpertTypeController@showList');
-Route::get('/expert-type/list-data','ExpertTypeController@listData');
-Route::resource('/expert-type','ExpertTypeController');
-
-//Staff Info
-Route::get('/staff-info/list','StaffInfoController@showList');
-Route::get('/staff-info/list-data','StaffInfoController@listData');
-Route::resource('/staff-info','StaffInfoController');

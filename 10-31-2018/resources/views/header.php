@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="<?php echo url('assets/Ionicons/css/ionicons.min.css'); ?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo url('css/AdminLTE.min.css'); ?>">
-  <link rel="stylesheet" href="<?php echo url('css/style.css'); ?>">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo url('css/skins/_all-skins.min.css'); ?>">
@@ -296,7 +295,6 @@
               </li>
             </ul>
           </li> -->
-           
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

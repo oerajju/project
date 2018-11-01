@@ -1,7 +1,7 @@
 
 <div class="box col-md-6">
                     <div class="box-header with-border">
-                        <h3 class="box-title">List of Country</h3>
+                        <h3 class="box-title">List of organization</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -31,9 +31,9 @@
                             <table id="country-table" class="table table-striped table-bordered">
                                 <tr>
                                   <th>Code</th>
-                                  <th>Name[english]</th>
-                                  <th>Name[nepali]</th>
-                                  <th>Actions</th>
+                                  <th>नाम [नेपाली]</th>
+                                  <th>सँस्थाको प्रकार</th>
+                                  <th>कार्यहरु</th>
                                 </tr>
 							  
                                 </table>
@@ -46,7 +46,7 @@
 <script>
     
 function table(){
-    var url = "country";
+    var url = "organization";
     url += "/list-data";
     var entry = $("#selectentry").val() || '';
     var search = $("#searchfill").val() || '';
@@ -66,23 +66,23 @@ function searchClicked(e){
 }
 
 function createTable(resp){
-    createDataTable('country-table',resp,['code','nameen','namenp'],'cid');
+    createDataTable('country-table',resp,['code','namenp','orgtypeid'],'orgid');
 }
 
 function edit(id){
-    var url = "country";
+    var url = "organization";
     url += "/"+id+'/edit';
     var xhr = ajaxGetObj(url);
     xhr.done(function(resp){
         assignValues(resp);
-       // $('#id').val(resp.levelid);
+        $('#id').val(resp.levelid);
     }).fail(function(reason){
         toast({status: "0", title: "error", text: "Error on Fetching Data"});
     });
 
 }
 function delt(id){
-    var url = "country";
+    var url = "organization";
     url += "/"+id;
     var xhr = deleteData(url);
     xhr.done(function(resp){
