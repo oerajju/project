@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2018 at 12:15 PM
+-- Generation Time: Nov 02, 2018 at 12:13 PM
 -- Server version: 5.7.16-log
 -- PHP Version: 7.2.5
 
@@ -43,7 +43,8 @@ CREATE TABLE `country` (
 
 INSERT INTO `country` (`cid`, `code`, `nameen`, `namenp`, `created_at`, `entered_by`) VALUES
 (1, '10212', 'Narayani', 'chitwane', '2018-10-30 07:28:43', NULL),
-(2, '1212', 'India', 'India', '2018-11-01 11:01:24', NULL);
+(2, '1212', 'India', 'India', '2018-11-01 11:01:24', NULL),
+(3, 'aaaaaaaaa', 'aaaa', 'Eastern', '2018-11-01 11:24:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -89,7 +90,8 @@ CREATE TABLE `expert_type` (
 --
 
 INSERT INTO `expert_type` (`etid`, `pid`, `nameen`, `namenp`, `created_at`, `entered_by`) VALUES
-(1, '2', 'chitwan', 'chitwane', '2018-10-30 07:28:43', NULL);
+(1, '2', 'chitwan', 'chitwane', '2018-10-30 07:28:43', NULL),
+(2, '1', 'Accountant', 'लेखापाल', '2018-11-01 11:22:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -301,7 +303,64 @@ CREATE TABLE `staff_info` (
 --
 
 INSERT INTO `staff_info` (`staffid`, `nameen`, `namenp`, `employeeno`, `orgid`, `gender`, `dob`, `post`, `mobile`, `phone`, `email`, `approved`, `disabled`, `created_at`, `entered_by`) VALUES
-(1, 'Saipal Technologies pvt.  ltd.', 'Saipal Technologies pvt.  ltd.', '10212', '1', 0, '20', 'Chanauli', '512 A', '056-121232', 'info@saipal.org', 1, 0, '2018-10-31 10:48:49', NULL);
+(1, 'Saipal Technologies pvt.  ltd.', 'Saipal Technologies pvt.  ltd.', '10212', '1', 0, '20', 'Chanauli', '512 A', '056-121232', 'info@saipal.org', 1, 0, '2018-10-31 10:48:49', NULL),
+(2, 'Raju Poudel', 'Raju Poudel', '10212', '1', 1, '2052/03/11', 'Software Developer', '9845807543', '056-121232', 'raju.poudel42@gmail.com', 1, 0, '2018-11-02 05:03:39', NULL),
+(3, 'Raju Poudel', 'Raju Poudel', '10212', '1', 1, '2052/03/11', 'Software Developer', '9845807543', '056-121232', 'raju.poudel42@gmail.com', 1, 0, '2018-11-02 05:07:05', NULL),
+(4, 'Raju Poudel', 'Raju Poudel', '10212', '1', 1, '2052/03/11', 'Software Developer', '9845807543', '056-121232', 'raju.poudel42@gmail.com', 1, 0, '2018-11-02 05:07:12', NULL),
+(5, 'Raju Poudel', 'Raju Poudel', '10212', '1', 1, '2052/03/11', 'Software Developer', '9845807543', '056-121232', 'raju.poudel42@gmail.com', 1, 0, '2018-11-02 05:07:17', NULL),
+(6, 'Raju Poudel', 'Raju Poudel', '10212', '1', 1, '2052/03/11', 'Software Developer', '9845807543', '056-121232', 'raju.poudel42@gmail.com', 1, 0, '2018-11-02 05:07:22', NULL),
+(7, 'Raju Poudel', 'Raju Poudel', '10212', '1', 1, '2052/03/11', 'Software Developer', '9845807543', '056-121232', 'raju.poudel42@gmail.com', 1, 0, '2018-11-02 05:07:28', NULL),
+(8, 'Raju Poudel', 'Raju Poudel', '10212', '1', 1, '2052/03/11', 'Software Developer', '9845807543', '056-121232', 'raju.poudel42@gmail.com', 1, 0, '2018-11-02 05:07:34', NULL),
+(9, 'Raju Poudel', 'Raju Poudel', '10212', '1', 1, '2052/03/11', 'Software Developer', '9845807543', '056-121232', 'raju.poudel42@gmail.com', 1, 0, '2018-11-02 05:07:41', NULL),
+(10, 'Raju Poudel', 'Raju Poudel', '10212', '1', 1, '2052/03/11', 'Software Developer', '9845807543', '056-121232', 'raju.poudel42@gmail.com', 1, 0, '2018-11-02 05:07:58', NULL),
+(11, 'Raju Poudel', 'Raju Poudel', '10212', '1', 1, '2052/03/11', 'Software Developer', '9845807543', '056-121232', 'raju.poudel42@gmail.com', 1, 0, '2018-11-02 05:08:04', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `staff_specialization`
+--
+
+CREATE TABLE `staff_specialization` (
+  `id` int(11) NOT NULL,
+  `productid` varchar(11) NOT NULL,
+  `expertid` varchar(11) NOT NULL,
+  `staffid` varchar(11) DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `staff_specialization`
+--
+
+INSERT INTO `staff_specialization` (`id`, `productid`, `expertid`, `staffid`, `remarks`) VALUES
+(1, '1', '1', NULL, NULL),
+(2, '1', '2', NULL, NULL),
+(3, '1', '2', NULL, NULL),
+(4, '1', '2', NULL, NULL),
+(5, '1', '1', NULL, NULL),
+(6, '1', '1', NULL, NULL),
+(7, '1', '1', NULL, NULL),
+(8, '1', '1', NULL, NULL),
+(9, '1', '1', NULL, NULL),
+(10, '1', '1', NULL, NULL),
+(11, '1', '1', NULL, NULL),
+(12, '1', '1', NULL, NULL),
+(13, '1', '1', NULL, NULL),
+(14, '1', '1', NULL, NULL),
+(15, '1', '1', NULL, NULL),
+(16, '1', '2', NULL, NULL),
+(17, '2', '1', NULL, 'aaaaaaaaa'),
+(18, '2', '1', NULL, 'aaaaaaaaa'),
+(19, '2', '2', NULL, 'aaaaaaaaa'),
+(20, '1', '2', NULL, 'aaaaaaaaaa'),
+(21, '2', '1', NULL, 'aaaaaaa'),
+(22, '2', '1', NULL, 'aaaaaaa'),
+(25, '1', '2', NULL, NULL),
+(26, '1', '2', NULL, NULL),
+(28, '1', '2', NULL, NULL),
+(29, '1', '2', NULL, NULL),
+(30, '1', '2', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -397,6 +456,12 @@ ALTER TABLE `staff_info`
   ADD PRIMARY KEY (`staffid`);
 
 --
+-- Indexes for table `staff_specialization`
+--
+ALTER TABLE `staff_specialization`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `zone`
 --
 ALTER TABLE `zone`
@@ -410,7 +475,7 @@ ALTER TABLE `zone`
 -- AUTO_INCREMENT for table `country`
 --
 ALTER TABLE `country`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `district`
@@ -422,7 +487,7 @@ ALTER TABLE `district`
 -- AUTO_INCREMENT for table `expert_type`
 --
 ALTER TABLE `expert_type`
-  MODIFY `etid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `etid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `municipality`
@@ -470,7 +535,13 @@ ALTER TABLE `region`
 -- AUTO_INCREMENT for table `staff_info`
 --
 ALTER TABLE `staff_info`
-  MODIFY `staffid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `staffid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `staff_specialization`
+--
+ALTER TABLE `staff_specialization`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `zone`
