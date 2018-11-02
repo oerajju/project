@@ -46,9 +46,11 @@ class StaffInfoController extends Controller {
      */
     public function create() {
         $parent = \App\Organization::all();
-        $orgtype = OrgType::all();
-        $district = District::all();
-        return view('staff-info.create')->with('parent', $parent);
+        $product = \App\Product::all();
+        $specialization = \App\ExpertType::all();
+        return view('staff-info.create')->with('parent', $parent)
+                                        ->with('product',$product)
+                                        ->with('specialization', $specialization);
     }
 
     /**
@@ -58,7 +60,6 @@ class StaffInfoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        return 'hello';
         //return $request->all();
          $model = new StaffInfo();
         if ($model->validate($request->all())) {
@@ -125,6 +126,30 @@ class StaffInfoController extends Controller {
      */
     public function destroy($id) {
         $model = StaffInfo::find($id);
+        if ($model->delete()) {
+            return response()->json($this->successMessage('Item deleted successfully.'));
+        } else {
+            return response()->json($this->errorMessage('Cannot remove item, Try agian later.'));
+        }
+    }
+
+    public function specRecord(Request $request) {
+        $model = new \App\StaffSpecialization();
+        if ($model->validate($request->all())) {
+            $req = $request->except(['_token']);
+            $model->fill($req);
+            if($model->save()){
+                $data = new \App\StaffSpecialization();
+                $data = $data->addedStaffSpec($model);
+            }
+            return response()->json($data);
+        } else {
+            return response()->json($this->errorMessage($model->errors), 500);
+            //return response()->json(['status'=>'error','title'=>t_label('Error'),'text'=>t_message('Cannot save data')],500);
+        }
+    }
+    public function removeSpecRow($id){
+        $model = \App\StaffSpecialization::find($id);
         if ($model->delete()) {
             return response()->json($this->successMessage('Item deleted successfully.'));
         } else {

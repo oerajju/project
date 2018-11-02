@@ -72,4 +72,6 @@ Route::resource('/expert-type','ExpertTypeController');
 //Staff Info
 Route::get('/staff-info/list','StaffInfoController@showList');
 Route::get('/staff-info/list-data','StaffInfoController@listData');
+Route::delete('/staff-info/remove-spec/{id}','StaffInfoController@removeSpecRow');
 Route::resource('/staff-info','StaffInfoController');
+Route::post('/staff-info/staff-spec','StaffInfoController@specRecord');
