@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\StaffInfo;
-use App\District;
-use App\OrgType;
+use App\ClientOrgType;
 use DB;
-class StaffInfoController extends Controller {
+class ClientOrgTypeController extends Controller {
 
     /**
      * Display a listing of the resource.
@@ -15,15 +13,15 @@ class StaffInfoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('staff-info.index');
+        return view('client-orgtype.index');
         }
 
     public function showList(Request $request){
-        return view('staff-info.list');
+        return view('client-orgtype.list');
     }
 
     public function listData(Request $request) {
-        $model = new StaffInfo();
+        $model = new ClientOrgType();
         $entry = $request->input("entry");
         $search = $request->input("search", null);
         $page = $request->input("page", null);
@@ -45,14 +43,7 @@ class StaffInfoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $parent = \App\Organization::all();
-        $post = \App\Post::all();
-        $product = \App\Product::all();
-        $specialization = \App\ExpertType::all();
-        return view('staff-info.create')->with('parent', $parent)
-                                        ->with('post', $post)
-                                        ->with('product',$product)
-                                        ->with('specialization', $specialization);
+        return view('client-orgtype.create');
     }
 
     /**
@@ -63,7 +54,7 @@ class StaffInfoController extends Controller {
      */
     public function store(Request $request) {
         //return $request->all();
-         $model = new StaffInfo();
+         $model = new ClientOrgType();
         if ($model->validate($request->all())) {
             $req = $request->except(['_token']);
             $model->fill($req);
@@ -94,7 +85,7 @@ class StaffInfoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-         $model = StaffInfo::find($id);
+         $model = ClientOrgType::find($id);
          return response()->json($model);
     }
 
@@ -106,10 +97,10 @@ class StaffInfoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        $model = new StaffInfo();
-        if ($model->validate($request->except(['staffid']))) {
-            $model = StaffInfo::find($id);
-            $req = $request->except(['staffid', '_token']);
+        $model = new ClientOrgType();
+        if ($model->validate($request->except(['id']))) {
+            $model = ClientOrgType::find($id);
+            $req = $request->except(['id', '_token']);
             $model->fill($req);
             $model->save();
             // redirect
@@ -127,40 +118,16 @@ class StaffInfoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $model = StaffInfo::find($id);
-        if ($model->delete()) {
-            return response()->json($this->successMessage('Item deleted successfully.'));
-        } else {
-            return response()->json($this->errorMessage('Cannot remove item, Try agian later.'));
-        }
-    }
-
-    public function specRecord(Request $request) {
-        $model = new \App\StaffSpecialization();
-        if ($model->validate($request->all())) {
-            $req = $request->except(['_token']);
-            $model->fill($req);
-            if($model->save()){
-                $data = new \App\StaffSpecialization();
-                $data = $data->addedStaffSpec($model);
-            }
-            return response()->json($data);
-        } else {
-            return response()->json($this->errorMessage($model->errors), 500);
-            //return response()->json(['status'=>'error','title'=>t_label('Error'),'text'=>t_message('Cannot save data')],500);
-        }
-    }
-    public function removeSpecRow($id){
-        $model = \App\StaffSpecialization::find($id);
-        if ($model->delete()) {
-            return response()->json($this->successMessage('Item deleted successfully.'));
-        } else {
-            return response()->json($this->errorMessage('Cannot remove item, Try agian later.'));
-        }
+        // $model = AdmType::find($id);
+        // if ($model->delete()) {
+        //     return response()->json($this->successMessage('Item deleted successfully.'));
+        // } else {
+        //     return response()->json($this->errorMessage('Cannot remove item, Try agian later.'));
+        // }
     }
 
     public function getSelectOptions() {
-        // $model = new StaffInfo();
+        // $model = new AdmType();
         // $data = $model->getSelectedData(['id', 'name'], 'name', "id,=,1");
         // return $data;
     }

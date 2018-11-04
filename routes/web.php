@@ -75,3 +75,29 @@ Route::get('/staff-info/list-data','StaffInfoController@listData');
 Route::delete('/staff-info/remove-spec/{id}','StaffInfoController@removeSpecRow');
 Route::resource('/staff-info','StaffInfoController');
 Route::post('/staff-info/staff-spec','StaffInfoController@specRecord');
+
+//Client Organization Type
+Route::get('/client-orgtype/list','ClientOrgTypeController@showList');
+Route::get('/client-orgtype/list-data','ClientOrgTypeController@listData');
+Route::resource('/client-orgtype','ClientOrgTypeController');
+
+// Client Organization
+Route::get('/client-org/list','ClientOrgController@showList');
+Route::get('/client-org/list-data','ClientOrgController@listData');
+Route::resource('/client-org','ClientOrgController');
+
+//Client Post
+Route::get('/client-post/list','ClientPostController@showList');
+Route::get('/client-post/list-data','ClientPostController@listData');
+Route::resource('/client-post','ClientPostController');
+
+//Focal Person
+Route::get('/focal-person/list','FocalPersonController@showList');
+Route::get('/focal-person/list-data','focalPersonController@listData');
+Route::resource('/focal-person','FocalPersonController');
+
+//Report List
+Route::get('/report/employee-list','ReportController@employeeList');
+Route::get('/report/participant-list','ReportController@participantList');
+Route::get('/report/participant-count', 'ReportController@participantCount');
+Route::post('/report/get-employee', 'ReportController@getEmployee');

@@ -68,8 +68,14 @@
 					  <input type="text" name='dob' id='dob' class="form-control" >
 					</div>
 					<div class="form-group">
-					  <label for="post">पद</label>
-					  <input type="text" name='post' id='post' class="form-control" >
+					  <label for="postid">पद</label>
+					  <select class="form-control" id="postid" name="posid">
+					  	<option value="">........</option>
+					  	 <?php
+					  	foreach($post as $p){?>
+					  		<option value="<?php echo $p->pid; ?>"><?php echo $p->namenp; ?></option>
+					  <?php } ?> 
+					  </select>
 					</div>
 					<div class="form-group">
 					  <label for="phone">फोन</label>

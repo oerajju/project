@@ -7,7 +7,7 @@ class StaffInfo extends BaseModel
 	protected $primaryKey='staffid';
 	protected $table = "staff_info";
 	public $timestamps = false;
-	protected $fillable = ['namenp','nameen','employeeno','orgid','dob','phone','mobile','email','gender','post','approved','disabled','entered_by'];
+	protected $fillable = ['namenp','nameen','employeeno','orgid','dob','phone','mobile','email','gender','postid','approved','disabled','entered_by'];
 	protected $rules = [
 			'orgid'=>'required|string',
 			'namenp'=>'required|string',
@@ -16,7 +16,7 @@ class StaffInfo extends BaseModel
             'phone'=>'string|nullable',
             'gender'=>'required|string',
             'mobile'=>'required|string',
-            'post'=>'required|string',
+            'postid'=>'required|string',
 	];
         
 }
