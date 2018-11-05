@@ -33,7 +33,17 @@ class ReportController extends Controller {
         $model = DB::table('staff_info as em')->select(['or.namenp as orgname','em.employeeno','em.nameen as employee Name[English]','em.namenp as Employee Name[Nepali]','em.gender','em.dob','p.namenp as post','em.phone','em.mobile','em.email'])
                    ->join('organization_str as or','or.orgid','=','em.orgid')
                    ->join('post as p','p.pid','=','em.postid')
-                   ->where('em.orgid','=', $org);
+                    ->where('em.orgid','=', $org);
+
+            if(!empty($post)){
+                $model->where('p.pid', $post);
+            }
+            if(!empty($gender)){
+                $model->where('em.gender', $gender);
+            }
+            if(!empty($name)){
+                $model->where('em.namenp', $name);
+            }
         return $model->get();
     }
 }

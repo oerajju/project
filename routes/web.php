@@ -101,3 +101,13 @@ Route::get('/report/employee-list','ReportController@employeeList');
 Route::get('/report/participant-list','ReportController@participantList');
 Route::get('/report/participant-count', 'ReportController@participantCount');
 Route::post('/report/get-employee', 'ReportController@getEmployee');
+
+//User Type
+Route::get('/user-type/list','UserTypeController@showList');
+Route::get('/user-type/list-data','UserTypeController@listData');
+Route::resource('/user-type','UserTypeController');
+
+//Users
+Route::get('/users/list','UsersController@showList');
+Route::get('/users/list-data','UsersController@listData');
+Route::resource('/users','UsersController');

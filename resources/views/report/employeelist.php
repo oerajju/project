@@ -38,7 +38,7 @@
 				<div class="box-header with-border">
                                     <h3 class="box-title">कर्मचारी सूचि</h3>
 				</div>
-				<form role="form" action="<?php echo url('report/get-employee');?>" method="post" id="form" class="oas-form-inline">
+				<form role="form" action="<?php echo url('report/get-employee');?>" method="post" id="form" class="oas-form-inline" target="_blank">
 				<input type="hidden" name="_token" id="_token" value="<?php echo csrf_token();?>">
 				<div class="box-body">
 					<div class="form-group">
@@ -78,8 +78,8 @@
 						<label class="text-center" for="download" style="width:50% !important;">Download in excel</label>
 						<input type="checkbox" name="download" id ="download" class="pull-left"/>
 					</div>
-				<div class="box-footer">
-					<button type="submit" class="btn btn-primary">Submit</button>
+				<div class="box-footer"> 
+					<button type="submit" class="btn btn-primary" >Submit</button>
 				 	<button type="reset" onClick="resetForm()" class="btn btn-info pull-right">Reset</button>
 				</div>
 				</form>
