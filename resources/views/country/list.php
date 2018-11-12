@@ -30,6 +30,7 @@
                         <div id="showtable" class="box-body">
                             <table id="country-table" class="table table-striped table-bordered">
                                 <tr>
+                                  <th>S.N.</th>
                                   <th>Code</th>
                                   <th>Name[english]</th>
                                   <th>Name[nepali]</th>
@@ -66,7 +67,7 @@ function searchClicked(e){
 }
 
 function createTable(resp){
-    createDataTable('country-table',resp,['code','nameen','namenp'],'cid');
+    createDataTable('country-table',resp,['code','nameen','namenp'],'cid',0,1);
 }
 
 function edit(id){

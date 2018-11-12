@@ -30,6 +30,7 @@
                         <div id="showtable" class="box-body">
                             <table id="country-table" class="table table-striped table-bordered">
                                 <tr>
+                                  <th>S.N.</th>
                                   <th>Level</th>
                                   <th>Name [English]</th>
                                   <th>नाम [नेपाली]</th> 
@@ -43,6 +44,8 @@
                         </ul>
                           </div>
                     </div>
+                </div>
+
 <script>
     
 function table(){
@@ -66,8 +69,45 @@ function searchClicked(e){
 }
 
 function createTable(resp){
-    createDataTable('country-table',resp,['level','nameen','namenp'],'utid');
+    createDataTable('country-table',resp,['level','nameen','namenp'],'utid',0,1);
 }
+
+function createDataTable(domId,response,fields,pk,actions,sn){
+    if($('#'+domId).length){
+        var t = document.getElementById(domId);
+        var dom = $('#'+domId);
+        $(dom).find("tr:gt(0)").remove();
+        var rowCount = 1;
+        var data = response.data;
+        if(data.length){
+            
+            for(var i in data){
+                  var row = t.insertRow(rowCount);
+                 
+                   
+                //row.insertCell().innerHTML[0] = rowCount;
+                for(var f in fields){
+                    row.insertCell(f).innerHTML = getText(data[i],fields[f]); //data[i][fields[f]];
+                }
+                if(actions!=1 ){
+                 row.insertCell(fields.length).innerHTML = "<a href='javascript:void(0)' onclick=\"edit('"+data[i][pk]+"')\" class='btn btn-xs btn-primary' title='Edit'><i class='glyphicon glyphicon-edit'></i></a>&nbsp;&nbsp;<a href='javascript:void(0)' onclick=\"delt('"+data[i][pk]+"')\" class='btn btn-xs btn-danger' title='Delete'><i class='glyphicon glyphicon-trash'></i></a>&nbsp;&nbsp;<a href='javascript:void(0)' data-toggle='modal' data-target='#user-perm' onclick=\"perm('"+data[i][pk]+"')\" class='btn btn-xs btn-danger' title='Configuration Setting'><i class='fa fa-cog'></i></a>";
+                }
+                if(sn==1){
+                    row.insertCell(0).innerHTML= rowCount; 
+                }
+                                rowCount++;
+
+            }
+            createPagination(response);
+        }else{
+            console.log('No data provided to crate table.');
+        }
+    }else{
+        console.log('Dom with id '+ domId+' not found.');
+    }
+}
+
+
 
 function edit(id){
     var url = "user-type";

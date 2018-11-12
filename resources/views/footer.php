@@ -228,7 +228,7 @@
         }
     }
     
-    function setDefaultDate(id='date'){
+    function setDefaultDate(id='dob'){
         if(typeof nepDate !='undefined' && nepDate!=''){
         if($('#'+id).length){
             $('#'+id).val(nepDate);

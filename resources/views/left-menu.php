@@ -38,15 +38,15 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="treeview"><a href="<?php echo url('org-type'); ?>"><i class="fa fa-plus"></i><span>सँस्था</span>
+            <li class="treeview"><a href="<?php echo url('organization'); ?>"><i class="fa fa-plus"></i><span>सँस्था</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span></a>
               <ul class="treeview-menu">
                 <li><a href="<?php echo url('org-type'); ?>"><i class="fa fa-circle-o"></i>सँस्थाको प्रकार </a></li>
-                <li><a href="<?php echo url('country/list');?>"><i class="fa fa-circle-o"></i>सँस्था</a></li>
-                <li><a href="<?php echo url('/hello'); ?>"><i class="fa fa-circle-o"></i>पद</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i>कर्मचारी विवण</a></li>
+                <li><a href="<?php echo url('organization');?>"><i class="fa fa-circle-o"></i>सँस्था</a></li>
+                <li><a href="<?php echo url('post'); ?>"><i class="fa fa-circle-o"></i>पद</a></li>
+                <li><a href="<?php echo url('staff-info');?>"><i class="fa fa-circle-o"></i>कर्मचारी विवण</a></li>
               </ul>
             </li>
             <li class="treeview"><a href="#"><i class="fa fa-plus"></i><span>सेवाग्राही</span>
@@ -54,10 +54,10 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </span></a>
               <ul class="treeview-menu">
-                <li><a href="index.html"><i class="fa fa-plus"></i>सँस्थाको प्रकार</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i>सँस्था</a></li>
-                <li><a href="index.html"><i class="fa fa-circle-o"></i>सेवाग्राही पद</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i>मूख्य व्यक्ति</a></li>
+                <li><a href="<?php echo url('client-orgtype'); ?>"><i class="fa fa-circle-o"></i>सँस्थाको प्रकार</a></li>
+                <li><a href="<?php echo url('client-org'); ?>"><i class="fa fa-circle-o"></i>सँस्था</a></li>
+                <li><a href="<?php echo url('client-post');?>"><i class="fa fa-circle-o"></i>सेवाग्राही पद</a></li>
+                <li><a href="<?php echo url('focal-person');?>"><i class="fa fa-circle-o"></i>मूख्य व्यक्ति</a></li>
               </ul>
             </li>
             <!-- <li class="treeview"><a href="#"><i class="fa fa-circle-o"></i><span>साधारण</span>
@@ -79,8 +79,8 @@
                 <li><a href="<?php echo url('/country');?>"><i class="fa fa-circle-o"></i>देश</a></li>
                 <li><a href="<?php echo url('/region');?>"><i class="fa fa-circle-o"></i>क्षेत्र</a></li>
                 <li><a href="<?php echo url('/zone'); ?>"><i class="fa fa-circle-o"></i>अञ्चल</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i>जिल्ला</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i>गा वि स</a></li>
+                <li><a href="<?php echo url('district'); ?>"><i class="fa fa-circle-o"></i>जिल्ला</a></li>
+                <li><a href="<?php echo url('municipality'); ?>"><i class="fa fa-circle-o"></i>गा वि स</a></li>
               </ul>
             </li>
           </ul>
@@ -94,10 +94,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i>सेवाको वर्ग</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>सेवाको प्रकार</a></li>
-            <li><a href="index.html"><i class="fa fa-circle-o"></i>सेवा</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>विशेषज्ञ प्रकार</a></li>
+            <li class="active"><a href="<?php echo url('product-group'); ?>"><i class="fa fa-circle-o"></i>सेवाको वर्ग</a></li>
+            <li><a href="<?php echo url('product-type'); ?>"><i class="fa fa-circle-o"></i>सेवाको प्रकार</a></li>
+            <li><a href="<?php echo url('product'); ?>"><i class="fa fa-circle-o"></i>सेवा</a></li>
+            <li><a href="<?php echo url('expert-type'); ?>"><i class="fa fa-circle-o"></i>विशेषज्ञ प्रकार</a></li>
           </ul>
         </li>
 
@@ -109,9 +109,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i>सहभागीको सूची</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>सहभागीको संख्या</a></li>
-            <li><a href="index.html"><i class="fa fa-circle-o"></i>कर्मचारी सूचि</a></li>
+            <li class="active"><a href="<?php echo url('report/participant-list'); ?>"><i class="fa fa-circle-o"></i>सहभागीको सूची</a></li>
+            <li><a href="<?php echo url('participant-count'); ?>"><i class="fa fa-circle-o"></i>सहभागीको संख्या</a></li>
+            <li><a href="<?php echo url('employee-list'); ?>"><i class="fa fa-circle-o"></i>कर्मचारी सूचि</a></li>
           </ul>
         </li>
 
@@ -123,10 +123,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i>प्रयोगकर्ताको प्रकार</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>पूर्वनिर्धारित अनुमति</a></li>
-            <li><a href="index.html"><i class="fa fa-circle-o"></i>प्रयोगकर्ता थप्नुहोस् </a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>पासवर्ड परिवर्तन</a></li>
+            <li class="active"><a href="<?php echo url('user-type'); ?>"><i class="fa fa-circle-o"></i>प्रयोगकर्ताको प्रकार</a></li>
+            <li><a href="<?php echo url('users-role'); ?>"><i class="fa fa-circle-o"></i>पूर्वनिर्धारित अनुमति</a></li>
+            <li><a href="<?php echo url('users'); ?>"><i class="fa fa-circle-o"></i>प्रयोगकर्ता थप्नुहोस् </a></li>
+            <li><a href="<?php echo url('changepassword'); ?>"><i class="fa fa-circle-o"></i>पासवर्ड परिवर्तन</a></li>
           </ul>
         </li>
         <!-- <li class="treeview">

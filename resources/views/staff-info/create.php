@@ -228,4 +228,6 @@ function removeSpecRow(id){
         console.log("Fail");
     });
 }
+NepDatePicker.createCalendar(document.getElementById('dob'));
+setDefaultDate();
 </script>

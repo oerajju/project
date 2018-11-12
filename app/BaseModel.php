@@ -86,7 +86,7 @@ class BaseModel extends Model
     
     public static function nepDate($date=null){
         if(empty($date)){
-            $date = date('Y-m-d');
+        $date = date('Y-m-d');
         }
         $q = DB::select(DB::raw("select nepdate('".$date."') as nepdate"));
         return $q[0]->nepdate;

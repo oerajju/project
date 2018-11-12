@@ -30,6 +30,7 @@
                         <div id="showtable" class="box-body">
                             <table id="country-table" class="table table-striped table-bordered">
                                 <tr>
+                                  <th>S.N.</th>
                                   <th>Name</th>
                                   <th>वर्णन</th>
                                   <th>कार्यहरु</th>
@@ -65,7 +66,7 @@ function searchClicked(e){
 }
 
 function createTable(resp){
-    createDataTable('country-table',resp,['name','description'],'pcid');
+    createDataTable('country-table',resp,['name','description'],'pcid',0,1);
 }
 
 function edit(id){

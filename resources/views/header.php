@@ -23,13 +23,13 @@
   <!-- jvectormap -->
   <link rel="stylesheet" href="<?php echo url('assets/jvectormap/jquery-jvectormap.css'); ?>">
   <!-- Date Picker -->
-  <link rel="stylesheet" href="<?php echo url('assets/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'); ?>">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="<?php echo url('assets/bootstrap-daterangepicker/daterangepicker.css'); ?>">
   <!-- toast-->
   <link rel="stylesheet" href="<?php echo asset('css/jquery.toast.min.css');?>">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); ?>">
+  <link rel="stylesheet" href="<?php echo asset('css/nepali-date-picker.css');?>">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,6 +42,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <script src="<?php echo url('assets/jquery/dist/jquery.min.js'); ?>"></script>
 <script src="<?php echo url('js/scripts.js'); ?>" type="text/javascript"></script>
+<script type="text/javascript" src="<?php echo asset('js/nepali-date-picker.js');?>"></script>
 
 <script type="text/javascript">
   //essentail global variable
@@ -49,6 +50,7 @@
       var gLoader = "loader-animation";
       var mainContainer="main-body";
       var genLabels = {};
+      var nepDate = '<?php echo \App\BaseModel::nepDate();?>';
       
      
     function t_field(field){

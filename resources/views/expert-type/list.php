@@ -30,6 +30,7 @@
                         <div id="showtable" class="box-body">
                             <table id="product-table" class="table table-striped table-bordered">
                                 <tr>
+                                  <th>S.N.</th>
                                   <th>सेवा</th>
                                   <th>Name[english]</th>
                                   <th>Name[nepali]</th>
@@ -66,7 +67,7 @@ function searchClicked(e){
 }
 
 function createTable(resp){
-    createDataTable('product-table',resp,['pid','nameen','namenp'],'etid');
+    createDataTable('product-table',resp,['pid','nameen','namenp'],'etid',0,1);
 }
 
 function edit(id){
