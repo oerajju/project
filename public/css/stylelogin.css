@@ -1,0 +1,12 @@
+#io-ox-login-header-prefix {
+    color: #6cbafc;
+    padding-left: 10px;
+}
+.clear-title {
+    font-size: 36px;
+    margin: 1em 0 0.2em;
+    color: #fff;
+    font-weight: bold;
+    font-family: "Helvetica Neue",OpenSans,Helvetica,Arial,sans-serif;
+    line-height:1.15em;
+}

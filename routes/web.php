@@ -14,6 +14,10 @@
 Route::get('/', function () {
     return view('dashboard');
 });
+
+Route::post('/auth/login','AuthController@login');
+Route::post('/auth/logout','AuthController@logout');
+Route::get('/auth','AuthController@index');
 //Country
 Route::get('/country/list', 'CountryController@showList');
 Route::get('/country/list-data','CountryController@listData');
