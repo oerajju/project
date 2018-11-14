@@ -13,9 +13,11 @@ class Auth {
                 ->where('username', '=', $username)
                 ->first();
         if (!empty($user)) {
-            if (Hash::check($password, $user->password_hash)) {
+            if (Hash::check($password, $user->password)) {
                 session([
-                    'userid' => $user->id,
+                    'logged_in' =>  true,
+                    'userid' => $user->userid,
+                    'user-type' =>$user->usertypeid,
                 ]);
                 return true;
             } else {
@@ -28,3 +30,4 @@ class Auth {
     public function logout() {
         Session::flush();
     }
+}

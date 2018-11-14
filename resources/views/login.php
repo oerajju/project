@@ -50,12 +50,13 @@
     <p class="login-box-msg">Sign in to start your session</p>
 
     <form method="post" id="loginForm" onsubmit="login(event)">
+        <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Username">
+        <input type="text" class="form-control" placeholder="Username" id="username" name="username">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" placeholder="Password" id="password" name="password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">

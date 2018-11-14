@@ -2,6 +2,7 @@
 
 namespace App;
 use App\BaseModel;
+use DB;
 class UserType extends BaseModel
 {
 	protected $primaryKey='utid';
@@ -13,6 +14,5 @@ class UserType extends BaseModel
             'level'=>'required|string',
             'namenp'=>'string|nullable',
 	];
-        
 }
 

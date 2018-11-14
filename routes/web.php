@@ -10,14 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::group(['middleware' => 'loggedin'], function() {
 Route::get('/', function () {
     return view('dashboard');
 });
+Route::get('/getmenulist','UserTypeController@getMenuList');
+Route::get('/auth/logout','AuthController@logout');
 
-Route::post('/auth/login','AuthController@login');
-Route::post('/auth/logout','AuthController@logout');
-Route::get('/auth','AuthController@index');
 //Country
 Route::get('/country/list', 'CountryController@showList');
 Route::get('/country/list-data','CountryController@listData');
@@ -115,3 +114,13 @@ Route::resource('/user-type','UserTypeController');
 Route::get('/users/list','UsersController@showList');
 Route::get('/users/list-data','UsersController@listData');
 Route::resource('/users','UsersController');
+});
+Route::group(['middleware' => 'loggedout'], function() {
+
+Route::get('/auth','AuthController@index');
+Route::post('/auth/login','AuthController@login');
+
+Route::get('/menusetup/list','MenuSetupController@showList');
+Route::get('menusetup/list-data','MenuSetupController@listData');
+Route::resource('/menusetup','MenuSetupController');
+});

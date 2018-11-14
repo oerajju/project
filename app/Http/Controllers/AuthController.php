@@ -21,18 +21,18 @@ class AuthController extends Controller {
         $password = $r->input('password');
         $status = $auth->login($username, $password);
         if ($status === -1) {
-            return response()->json($this->errorMessage(t_message('User may not exist or not activated yet.')), 500);
+            return response()->json($this->errorMessage('User may not exist or not activated yet.'), 500);
         } elseif ($status === true) {
-            return response()->json($this->successMessage(t_message('Login Successful.')));
+            return response()->json($this->successMessage('Login Successful.'));
         } else {
-            return response()->json($this->errorMessage(t_message('Invalid username or password')), 500);
+            return response()->json($this->errorMessage('Invalid username or password'), 500);
         }
     }
 
     public function logout() {
         $auth = new Auth();
         $auth->logOut();
-        return response()->json($this->successMessage(t_message('Logged Out Successfully.')));
+        return response()->json($this->successMessage('Logged Out Successfully.'));
     }
 
     // public function resetAdminPassword(Request $request) {

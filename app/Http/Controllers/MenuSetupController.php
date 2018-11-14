@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\UserType;
-use App\District;
-use App\OrgType;
+use App\menusetup;
+use App\Country;
 use DB;
-use Response;
-class UserTypeController extends Controller {
+class MenuSetupController extends Controller {
 
     /**
      * Display a listing of the resource.
@@ -16,15 +14,15 @@ class UserTypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('user-type.index');
+        return view('menusetup.index');
         }
 
     public function showList(Request $request){
-        return view('user-type.list');
+        return view('menusetup.list');
     }
 
     public function listData(Request $request) {
-        $model = new UserType();
+        $model = new menusetup();
         $entry = $request->input("entry");
         $search = $request->input("search", null);
         $page = $request->input("page", null);
@@ -46,8 +44,8 @@ class UserTypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $parent = UserType::all();
-        return view('user-type.create')->with('parent', $parent);
+        $menus = MenuSetup::all();
+        return view('menusetup.create')->with('menus', $menus);
     }
 
     /**
@@ -58,7 +56,7 @@ class UserTypeController extends Controller {
      */
     public function store(Request $request) {
         //return $request->all();
-         $model = new UserType();
+         $model = new menusetup();
         if ($model->validate($request->all())) {
             $req = $request->except(['_token']);
             $model->fill($req);
@@ -89,7 +87,7 @@ class UserTypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-         $model = UserType::find($id);
+         $model = menusetup::find($id);
          return response()->json($model);
     }
 
@@ -101,10 +99,10 @@ class UserTypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        $model = new UserType();
-        if ($model->validate($request->except(['mid']))) {
-            $model = UserType::find($id);
-            $req = $request->except(['mid', '_token']);
+        $model = new menusetup();
+        if ($model->validate($request->except(['id']))) {
+            $model = menusetup::find($id);
+            $req = $request->except(['id', '_token']);
             $model->fill($req);
             $model->save();
             // redirect
@@ -122,18 +120,18 @@ class UserTypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $model = UserType::find($id);
-        if ($model->delete()) {
-            return response()->json($this->successMessage('Item deleted successfully.'));
-        } else {
-            return response()->json($this->errorMessage('Cannot remove item, Try agian later.'));
-        }
+        // $model = AdmType::find($id);
+        // if ($model->delete()) {
+        //     return response()->json($this->successMessage('Item deleted successfully.'));
+        // } else {
+        //     return response()->json($this->errorMessage('Cannot remove item, Try agian later.'));
+        // }
     }
 
-    public function getMenuList() {
-        $model = new \App\UserMenus();
-        $data = $model->getAllMenus();
-        return response()->json($data);
+    public function getSelectOptions() {
+        // $model = new AdmType();
+        // $data = $model->getSelectedData(['id', 'name'], 'name', "id,=,1");
+        // return $data;
     }
 
 }

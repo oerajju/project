@@ -133,7 +133,7 @@
                                 <a  href="#tab1" data-toggle="tab" class="btn btn-flat btn-primary">Subordinate</a>
                             </li>
                             <li>
-                                <a href="#tab2" data-toggle="tab" class="btn btn-flat btn-primary">Menu List</a>
+                                <a href="#tab2" data-toggle="tab" class="btn btn-flat btn-primary"  onclick="setPermission();">Menu List</a>
                             </li>
                         </ul>
                     </span>
@@ -143,95 +143,15 @@
                 <div class="modal-body">
                     <div class="tab-content clearfix">
                         <div class="col-md-12 tab-pane active" id="tab1">
-                            <div class="row darbandi-create">
-                                <div class="col-lg-12 ">
-                                    <div class="form-inline ">
-                                        <form action="" method="post" id="drb-staff-form">
-                                            <div class="form-group">
-                                                <input type="hidden" name="staffidp" id="staffidp" value="">
-                                                <input type="hidden" name="namep" id="namep" value="">
-
-                                                <input type="hidden" name="staffid" id="staffid" value="">
-                                                <input type="hidden" name="darbandiid"  id="darbandiid" value="">
-                                                <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
-                                                <label for="emptype">Employee</label>
-                                                <input type="text" class="form-control" name="employee-name"  id='employee-name'>
-                                            </div>
-                                            <div class="form-group small-button">
-                                                <label for="officeid"></label>
-                                                <button type="button"   class="form-control btn btn-success" onclick="addEmployee()">ADD</button>
-                                                <button type="button" class="form-control btn btn-danger" onclick="resetEmployee()">Reset</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-sm-6 col-sm-offset-3">
-                                    <div id="imaginary_container"> 
-                                        <div class="input-group stylish-input-group">
-                                            <input type="text" class="form-control"  placeholder="Search by Name or PIS ID" id="search-key" name="search-key" >
-                                            <span class="input-group-addon" style="padding:5px 14px;">
-                                                <button type="submit" onclick="searchEmps()">
-                                                    <span class="glyphicon glyphicon-search"></span>
-                                                </button>  
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr/>
-
-                            <div class="row users">
-                                <div class="col-md-4">
-                                    <div class="box box-primary box-solid">
-                                        <div class="box-header with-border">
-                                            <h3 class="box-title">New Users</h3>
-                                        </div>
-                                        <!-- /.box-header -->
-                                        <div class="box-body">
-                                            <ul class="list-group" id="new-users">
-
-                                            </ul> 
-                                        </div>
-                                        <!-- /.box-body -->
-                                    </div>
-                                </div>  
-                                <div class="col-md-4">
-                                    <div class="box box-success box-solid">
-                                        <div class="box-header with-border">
-                                            <h3 class="box-title">Active Users</h3>
-                                        </div>
-                                        <!-- /.box-header -->
-                                        <div class="box-body">
-                                            <ul class="list-group" id="active-users">
-
-                                            </ul> 
-                                        </div>
-                                        <!-- /.box-body -->
-                                    </div>
-                                </div>  
-                                <div class="col-md-4">
-                                    <div class="box box-default box-solid">
-                                        <div class="box-header with-border">
-                                            <h3 class="box-title">Previous Users</h3>
-                                        </div>
-                                        <!-- /.box-header -->
-                                        <div class="box-body">
-                                            <ul class="list-group" id="old-users">
-
-                                            </ul> 
-                                            </ul> 
-                                        </div>
-                                        <!-- /.box-body -->
-                                    </div>
-                                </div>  
-                            </div>
+                           
                         </div>
                         <div class="row darbandi-roles tab-pane" id="tab2">
-                            <div class="col-md-12 ">
-
+                            <div class="col-md-5 ">
+                                <ul id="perm-menu" class="sidebar-menu" data-widget="tree">
+                                
+                                  </ul>
+                                </li>
+                            </ul>
                             </div>
                         </div>
                     </div>
@@ -263,7 +183,62 @@ function formSubmit(e){
     });
 }
 function perm(id){
-	console.log(id);	
-      $('#user-perm #usertypeid').val(id);
+	//console.log(id);	
+    $('#user-perm #usertypeid').val(id);
+}
+function setPermission(){
+    var url = "/getmenulist";
+    var xhr = ajaxGetObj(url);
+    xhr.done(function(response){
+        console.log(response);
+        createMenuWithPermission('perm-menu',response);
+    }).fail(function(){
+        console.log("failed");
+    });
+}
+function createMenuWithPermission(domId, response){
+if($('#'+domId).length){
+   // console.log($('#'+domId).length);
+        var t = document.getElementById(domId);
+        // var dom = $('#'+domId);
+        // $(dom).find("tr:gt(0)").remove();
+        // var rowCount = 1;
+         var data = response.menu;
+         if(data.length){
+            console.log(data);
+            var html;
+            var ul ="";
+            for(var i in data){
+                // html = "<li id='"+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+"' class='treeview'><a href='#'><i class='fa fa-dashboard'></i> <span>"+data[i]['parent']['menu_nameen']+"</span></a><li>";
+                // $('#'+domId).append(html);
+                for(var j in data[i]['parent']['children']){
+                    console.log(data[i]['parent']['children'][0]['menu_nameen']);
+                // ul = "<ul class=''><li><i class='fa fa-circle-o'></i>"+data[i]['parent']['children']['menu_nameen']+"</li></ul>";
+                // $('#'+data[i]['parent']['menu_nameen']+'_'+data[i]['pardent']['menuid']).append(ul);
+                }
+                }
+        //           var row = t.insertRow(rowCount);
+                 
+                   
+        //         //row.insertCell().innerHTML[0] = rowCount;
+        //         for(var f in fields){
+        //             row.insertCell(f).innerHTML = getText(data[i],fields[f]); //data[i][fields[f]];
+        //         }
+        //         if(actions!=1 ){
+        //          row.insertCell(fields.length).innerHTML = "<a href='javascript:void(0)' onclick=\"edit('"+data[i][pk]+"')\" class='btn btn-xs btn-primary' title='Edit'><i class='glyphicon glyphicon-edit'></i></a>&nbsp;&nbsp;<a href='javascript:void(0)' onclick=\"delt('"+data[i][pk]+"')\" class='btn btn-xs btn-danger' title='Delete'><i class='glyphicon glyphicon-trash'></i></a>";
+        //         }
+        //         if(sn==1){
+        //             row.insertCell(0).innerHTML= rowCount; 
+        //         }
+        //                         rowCount++;
+
+           // }
+        //     createPagination(response);
+         }else{
+            console.log('No data provided to list menu.');
+        }
+    }else{
+        console.log('Dom with id '+ domId+' not found.');
+    }
 }
 </script>
