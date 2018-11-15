@@ -40,6 +40,15 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <style>
+  .main-header{
+    min-height: 40px;
+  }
+    .main-header .logo, .main-sidebar{
+      overflow: hidden;
+      position: fixed;
+    }
+</style>
 <script src="<?php echo url('assets/jquery/dist/jquery.min.js'); ?>"></script>
 <script src="<?php echo url('js/scripts.js'); ?>" type="text/javascript"></script>
 <script type="text/javascript" src="<?php echo asset('js/nepali-date-picker.js');?>"></script>
@@ -95,7 +104,7 @@
       <span class="logo-lg"><b>MIS </b>[NMVF]</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
+    <nav class="navbar navbar-fixed-top">
       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>

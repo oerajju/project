@@ -42,6 +42,8 @@
 <script src="<?php echo url('js/pages/dashboard.js'); ?>"></script>
 
 <!-- AdminLTE for demo purposes -->
+
+<script src="<?php echo url('js/scripts.js'); ?>" type="text/javascript"></script>
 <script src="<?php echo url('js/app.js'); ?>"></script>
 <script src="<?php echo url('js/demo.js'); ?>"></script>
 <script src="<?php echo url('js/function.js'); ?>" type="text/javascript"></script>
@@ -64,177 +66,164 @@
         textAlign: 'center',
         position: 'mid-center',
     };
-    function countInbox(){
-        var url = baseUrl+"/auth/count-inbox-mail/";
-    var xhr = ajaxGetObj(url);
+function createLeftMenuWithPermission(domId, response){
+    if($('.'+domId).length){
+        var data = response.menu;
+        if(data.length){
+            var ht="";
+            var ul ="";
+            for(var i in data){
+                ht = "<li class='treeview' id='"+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+"' ><a href='#'><i class='fa fa-dashboard'></i><span>"+data[i]['parent']['menu_nameen']+"</span></a></li>";
+                $('.sidebar .'+domId).append(ht);
+                if(data[i]['parent']['childern']){
+                    $('#'+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+' a').append(' <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>');
+                $('#' +data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']).append("<ul class='treeview-menu' id="+data[i]['parent']['menuid']+"></ul>");
+                }
+                for(var j in data[i]['parent']['childern']){
+                    if(data[i]['parent']['childern'][j]['children']){
+                        ul = "<li class='treeview' id='"+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+"'><a href='#'><i class='fa fa-plus'></i><span>"+data[i]['parent']['childern'][j]['menu_nameen']+"</span><span class='pull-right-container'><i class='fa fa-angle-left pull-right'></i></a></li>";
+                        $('#'+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+' #'+data[i]['parent']['menuid']).append(ul);
+                         $('#' +data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']).append("<ul class='treeview-menu' id="+data[i]['parent']['childern'][j]['menuid']+"></ul>");
+                    }
+                    else{
+                        $('#'+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+ 'a').removeAttr('href');
+                        ul = "<li id='"+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+"'><a href="+baseUrl+'/'+data[i]['parent']['childern'][j]['menu_url']+"><i class='fa fa-circle-o'></i>"+data[i]['parent']['childern'][j]['menu_nameen']+"</a></li>";
+                        $('#'+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+' #'+data[i]['parent']['menuid']).append(ul);
+                    }
+                    for(var k in data[i]['parent']['childern'][j]['children']){
+                        subul = "<li id='"+data[i]['parent']['childern'][j]['children'][k]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['children'][k]['menuid']+"'><a href="+baseUrl+'/'+data[i]['parent']['childern'][j]['children'][k]['menu_url']+"><i class='fa fa-circle-o'></i>"+data[i]['parent']['childern'][j]['children'][k]['menu_nameen']+"</a></li>";
+                        $('#'+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+' #'+data[i]['parent']['childern'][j]['menuid']).append(subul);
+                    }
+                }
+            }
+        }else{
+            console.log('No data provided to list menu.');
+        }
+    }else{
+        console.log('Dom with id '+ domId+' not found.');
+    }
+}
+function toast(a) {
+    var statusToIcon = [
+        'error','success','warning','info'
+    ];
+    var statusToHeading = [
+        'Error','Success','Warning','Info'
+    ];
+    var tostObj = {
+    heading: a.title || statusToHeading[a.status],
+    text: prepareMessage(a.message),
+    showHideTransition: 'slide',
+    position: 'top-right',
+    hideAfter: 7000,
+    loader: false,
+    icon: parseInt(a.status)== 'NaN'?a.status:statusToIcon[a.status]
+    };
+    $.toast(tostObj);
+    return true;
+}
+function parseMessage(msg){
+    var m = "";
+    if (typeof msg == 'object') {
+        for (let i in msg) {
+            m += parseMessage(msg[i]);
+        }
+    } else if (typeof msg == 'string') {
+        m += msg + '<br/>';
+    }
+    return m;
+}
+    
+function prepareMessage(msg){
+    var newMessage = parseMessage(msg).trim();
+    return newMessage.slice(0, -5);
+}
+    
+function page(e, last) {
+    e.preventDefault();
+    var entry = $("#selectentry").val();
+    var page = e.target.text;
+    var index = $("body #pagg ul li.active").text();
+    if (page === "Prev") {
+        if(index >= 1){
+            index--;
+            page = index;
+        }else{
+            return;
+        }
+    }
+    if (page === "Next") {
+        if (index != last) {
+            index++;
+            page = index;
+        } else {
+            return;
+        }
+    }
+    var path = window.location.href.split('/');
+
+    var path = path[path.length - 1];
+     if(path=="search"){
+        var data =  $("#form").serialize();
+    var url = baseurl + "/search/getlist";
+     var entry = $("#selectentry").val() || '';
+         var search = $("#searchfill").val() || '';
+         // var index = $("body #pagg ul li.active").text() || 1;
+         url += "?entry="+entry+"&page="+page;
+    var xhr = submitFormAjax(url,data);
     xhr.done(function(resp){
-        $('.count-mail').text(resp.mail);
-        $('.count-imail').text(resp.internal);
-    }).fail(function(reason){
-        var rsp = reason.responseJSON;
-        //toast(rsp);
+        createTable(resp);
+        // table();
+        // toast(resp);
     });
-    }
-
-    if( typeof darbandi !='undefined' && darbandi!=''){
-        countInbox();
-      }
-    function toast(a) {
-        var statusToIcon = [
-            'error','success','warning','info'
-        ];
-        var statusToHeading = [
-            'Error','Success','Warning','Info'
-        ];
-        var tostObj = {
-            heading: a.title || statusToHeading[a.status],
-            text: prepareMessage(a.message),
-            showHideTransition: 'slide',
-            position: 'top-right',
-            hideAfter: 7000,
-            loader: false,
-            icon: parseInt(a.status)== 'NaN'?a.status:statusToIcon[a.status]
-        };
-        $.toast(tostObj);
-        return true;
-    }
-    function parseMessage(msg){
-        var m = "";
-        if (typeof msg == 'object') {
-            for (let i in msg) {
-                m += parseMessage(msg[i]);
-            }
-        } else if (typeof msg == 'string') {
-            m += msg + '<br/>';
-        }
-        return m;
-    }
-    
-    function prepareMessage(msg){
-        var newMessage = parseMessage(msg).trim();
-        return newMessage.slice(0, -5);
-    }
-    
-    function page(e, last) {
-        e.preventDefault();
-        var entry = $("#selectentry").val();
-        var page = e.target.text;
-        var index = $("body #pagg ul li.active").text();
-        if (page === "Prev") {
-            if(index >= 1){
-                index--;
-                page = index;
-            }else{
-                return;
-            }
-        }
-        if (page === "Next") {
-            if (index != last) {
-                index++;
-                page = index;
-            } else {
-                return;
-            }
-        }
-        var path = window.location.href.split('/');
-
-        var path = path[path.length - 1];
-         if(path=="search"){
-            var data =  $("#form").serialize();
-        var url = baseurl + "/search/getlist";
-         var entry = $("#selectentry").val() || '';
-             var search = $("#searchfill").val() || '';
-             // var index = $("body #pagg ul li.active").text() || 1;
-             url += "?entry="+entry+"&page="+page;
-        var xhr = submitFormAjax(url,data);
-        xhr.done(function(resp){
-            createTable(resp);
-            // table();
-            // toast(resp);
-        });
-        xhr.fail(function(reason){
-            var rsp = reason.responseJSON;
-            toast(rsp);
-        });
-         } else{
-        var url = baseUrl + "/" + path + "/list-data?entry=" + entry + "&page=" + page + "&search=" + $("#searchfill").val();
-        if($('#page-param').length && $('#page-param').val()!=''){
-            url += $('#page-param').val();
-        }
-        var xhr = ajaxGetObj(url);
-        xhr.done(function(resp){
-            createTable(resp);
-        }).fail(function(error){
-            console.log(error);
-        });
-    }
-    }
-    
-   function logout(e){
-       e.preventDefault();
-       var xhr = ajaxGetObj('<?php echo url('/').'/auth/logout';?>');
-       xhr.done(function(resp){
-           toast({status:"1",title:"success",text:resp.text});
-           window.location.href = '<?php echo url('/');?>';
-       }).fail(function(reason){
-           toast({status:"0",title:"error",text:'Cannot Logout Right Now..'});
-       });
-   }
-
-// sets title to all the pages if available
-   function setTitle(){
-       var title = $('#main-body > .row').data('title');
-       if(title){
-           $('.body-header').html('<div>'+title+'</div>');
-           $('title').text(title);
-       }else{
-           $('.body-header').html('');
-           $('title').text('MIS [NMVF]');
-       }
-   }
-   setTitle();
-   
-   function switchAccount(darbandi){
-    var url = baseUrl+"/auth/switch-account/"+darbandi;
-    var xhr = ajaxGetObj(url);
-    xhr.done(function(resp){
-        toast(resp);
-        window.location.href = baseUrl;
-    }).fail(function(reason){
+    xhr.fail(function(reason){
         var rsp = reason.responseJSON;
         toast(rsp);
     });
+     } else{
+    var url = baseUrl + "/" + path + "/list-data?entry=" + entry + "&page=" + page + "&search=" + $("#searchfill").val();
+    if($('#page-param').length && $('#page-param').val()!=''){
+        url += $('#page-param').val();
+    }
+    var xhr = ajaxGetObj(url);
+    xhr.done(function(resp){
+        createTable(resp);
+    }).fail(function(error){
+        console.log(error);
+    });
+}
+}
+function logout(e){
+   e.preventDefault();
+   var xhr = ajaxGetObj('<?php echo url('/').'/auth/logout';?>');
+   xhr.done(function(resp){
+       toast({status:"1",title:"success",text:resp.text});
+       window.location.href = '<?php echo url('/');?>';
+   }).fail(function(reason){
+       toast({status:"0",title:"error",text:'Cannot Logout Right Now..'});
+   });
+}
+
+// sets title to all the pages if available
+function setTitle(){
+   var title = $('#main-body > .row').data('title');
+   if(title){
+       $('.body-header').html('<div>'+title+'</div>');
+       $('title').text(title);
+   }else{
+       $('.body-header').html('');
+       $('title').text('MIS [NMVF]');
    }
-   function setDefaultSection(id='officeid'){
-       if( typeof section !='undefined' && section!=''){
-        if($('#'+id).length){
-            $('#'+id).val(section).trigger('change');
-        }
+}
+setTitle();
+function setDefaultDate(id='dob'){
+    if(typeof nepDate !='undefined' && nepDate!=''){
+    if($('#'+id).length){
+        $('#'+id).val(nepDate);
     }
     }
-    function setDefaultOrg(id='orgidint'){
-        if(typeof org !='undefined' && org!=''){
-        if($('#'+id).length){
-            $('#'+id).val(org).trigger('change');
-        }
-        }
-    }
-    
-    function setDefaultDarbandi(id='darbandiid'){
-        if(typeof darbandi !='undefined' && darbandi!=''){
-        if($('#'+id).length){
-            $('#'+id).val(darbandi).trigger('change');
-        }
-        }
-    }
-    
-    function setDefaultDate(id='dob'){
-        if(typeof nepDate !='undefined' && nepDate!=''){
-        if($('#'+id).length){
-            $('#'+id).val(nepDate);
-        }
-        }
-    }
-    </script>
+}
+
+</script>
 </body>
 </html>
