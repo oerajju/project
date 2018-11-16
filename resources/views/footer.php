@@ -1,6 +1,14 @@
 </section>
 </div>
 </div>
+<div class="control-sidebar-bg"></div>
+<div id="loader-animation" style="position: fixed;width: 100%;height: 100%;left: 0;top: 0;z-index: 99999;  opacity: 1;display: none">
+    <div  style="display: table; margin: 0 auto;width: 120px;position: fixed;top: 45%;left: 45%;padding:0px 40px;background-color: #444;border-radius: 0.5em;">
+        <ion-spinner icon="ios" class="spinner spinner-ios" style="width: 35px; float:left; stroke: #fff;fill: #fff;">
+            <svg viewBox="0 0 64 64" style="width: 100% !important;height: 50px !important;" ><g stroke-width="4" stroke-linecap="round"><line y1="17" y2="29" transform="translate(32,32) rotate(180)"><animate attributeName="stroke-opacity" dur="750ms" values="1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(210)"><animate attributeName="stroke-opacity" dur="750ms" values="0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(240)"><animate attributeName="stroke-opacity" dur="750ms" values=".1;0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(270)"><animate attributeName="stroke-opacity" dur="750ms" values=".15;.1;0;1;.85;.7;.65;.55;.45;.35;.25;.15" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(300)"><animate attributeName="stroke-opacity" dur="750ms" values=".25;.15;.1;0;1;.85;.7;.65;.55;.45;.35;.25" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(330)"><animate attributeName="stroke-opacity" dur="750ms" values=".35;.25;.15;.1;0;1;.85;.7;.65;.55;.45;.35" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(0)"><animate attributeName="stroke-opacity" dur="750ms" values=".45;.35;.25;.15;.1;0;1;.85;.7;.65;.55;.45" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(30)"><animate attributeName="stroke-opacity" dur="750ms" values=".55;.45;.35;.25;.15;.1;0;1;.85;.7;.65;.55" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(60)"><animate attributeName="stroke-opacity" dur="750ms" values=".65;.55;.45;.35;.25;.15;.1;0;1;.85;.7;.65" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(90)"><animate attributeName="stroke-opacity" dur="750ms" values=".7;.65;.55;.45;.35;.25;.15;.1;0;1;.85;.7" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(120)"><animate attributeName="stroke-opacity" dur="750ms" values=".85;.7;.65;.55;.45;.35;.25;.15;.1;0;1;.85" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(150)"><animate attributeName="stroke-opacity" dur="750ms" values="1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1" repeatCount="indefinite"></animate></line></g></svg></ion-spinner>
+        <span style="display: table-cell;vertical-align: middle;font-size: 16px;position: relative;top: -2px;left: 7px;color: white;">Loading...</span>
+    </div>
+</div>
 <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
@@ -34,6 +42,9 @@
 <script src="<?php echo url('assets/bootstrap-daterangepicker/daterangepicker.js'); ?>"></script>
 <!-- datepicker -->
 <script src="<?php echo url('assets/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'); ?>"></script>
+<script src="<?php echo asset('assets/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'); ?>"></script>
+<!-- Slimscroll -->
+<script src="<?php echo asset('assets/jquery-slimScroll/jquery.slimscroll.min.js'); ?>"></script>
 <!-- FastClick -->
 <script src="<?php echo url('assets/fastclick/lib/fastclick.js'); ?>"></script>
 <!-- AdminLTE App -->
@@ -66,6 +77,8 @@
         textAlign: 'center',
         position: 'mid-center',
     };
+    
+
 function createLeftMenuWithPermission(domId, response){
     if($('.'+domId).length){
         var data = response.menu;
@@ -87,11 +100,11 @@ function createLeftMenuWithPermission(domId, response){
                     }
                     else{
                         $('#'+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+ 'a').removeAttr('href');
-                        ul = "<li id='"+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+"'><a href="+baseUrl+'/'+data[i]['parent']['childern'][j]['menu_url']+"><i class='fa fa-circle-o'></i>"+data[i]['parent']['childern'][j]['menu_nameen']+"</a></li>";
+                        ul = "<li id='"+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+"'><a data-async='fullpage' href="+baseUrl+'/'+data[i]['parent']['childern'][j]['menu_url']+"><i class='fa fa-circle-o'></i>"+data[i]['parent']['childern'][j]['menu_nameen']+"</a></li>";
                         $('#'+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+' #'+data[i]['parent']['menuid']).append(ul);
                     }
                     for(var k in data[i]['parent']['childern'][j]['children']){
-                        subul = "<li id='"+data[i]['parent']['childern'][j]['children'][k]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['children'][k]['menuid']+"'><a href="+baseUrl+'/'+data[i]['parent']['childern'][j]['children'][k]['menu_url']+"><i class='fa fa-circle-o'></i>"+data[i]['parent']['childern'][j]['children'][k]['menu_nameen']+"</a></li>";
+                        subul = "<li id='"+data[i]['parent']['childern'][j]['children'][k]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['children'][k]['menuid']+"'><a data-async='fullpage' href="+baseUrl+'/'+data[i]['parent']['childern'][j]['children'][k]['menu_url']+"><i class='fa fa-circle-o'></i>"+data[i]['parent']['childern'][j]['children'][k]['menu_nameen']+"</a></li>";
                         $('#'+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+' #'+data[i]['parent']['childern'][j]['menuid']).append(subul);
                     }
                 }

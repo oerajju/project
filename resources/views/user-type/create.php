@@ -1,4 +1,11 @@
 <style type="text/css">
+#list-box{
+    width:50%;
+    background:#dfe8f6;
+}
+$list-box .modal-body{
+    width:80%;
+}
 .treeview-menu .last-li{
     color:white;
 }
@@ -63,6 +70,17 @@
         display: inline-block;
         padding-right: 5px;
     }
+    #user-perm .model-dialog{
+        padding:5%;
+    }
+    #user-perm .model-content{
+        padding:5%;
+    }
+    #list-box {
+    width: 80%;
+    background: #dfe8f6;
+
+}
 </style>
 <div class="box">
 				<div class="box-header with-border">
@@ -128,42 +146,53 @@
 
 <div id="user-perm" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span></button>
-                    <span class="pull-right">
-                        <!-- Tabs -->
-                        <ul class="nav panel-tabs">
-                            <li class="active">
-                                <a  href="#tab1" data-toggle="tab" class="btn btn-flat btn-primary">Subordinate</a>
-                            </li>
-                            <li>
-                                <a href="#tab2" data-toggle="tab" class="btn btn-flat btn-primary"  onclick="setPermission();">Menu List</a>
-                            </li>
-                        </ul>
-                    </span>
-                    <h4 class="modal-title"> Users Permission</h4>
-
-                </div>
-                <div class="modal-body">
-                    <div class="tab-content clearfix">
-                        <div class="col-md-12 tab-pane active" id="tab1">
-                           
-                        </div>
-                        <div class="row darbandi-roles tab-pane" id="tab2">
-                            <div class="col-md-5 center">
-                                <ul class="sidebar-menu tree col-md-8" id="perm-menu">
-                                
-                                  </ul>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <span class="pull-right">
+                    <!-- Tabs -->
+                    <ul class="nav panel-tabs">
+                        <li class="active">
+                            <a  href="#tab1" data-toggle="tab" class="btn btn-flat btn-primary">Subordinate</a>
+                        </li>
+                        <li>
+                            <a href="#tab2" data-toggle="tab" class="btn btn-flat btn-primary"  onclick="setPermission();">Menu List</a>
+                        </li>
+                    </ul>
+                </span>
+                <h4 class="modal-title"> Users Permission</h4>
+            </div>
+            <div class="modal-body">
+                <div class="tab-content clearfix">
+                    <div class="col-md-12 tab-pane active" id="tab1">
+                       
+                    </div>
+                    <div class="row darbandi-roles tab-pane" id="tab2">
+                        <div id="list-box" class="box col-md-12">
+                            <div class="box-header">
+                                <h5 class="box-title">Assign Permission</h5>
                             </div>
+                            <form role="form"  method="post" id="listform" class="oas-form" onsubmit="SubmitListPermission" >
+                                <div class="box-body">
+                                    <ul class="sidebar-menu tree col-md-8" id="perm-menu">
+                                    
+                                    </ul>
+                                </div>
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="reset" onClick="resetForm()" class="btn btn-info pull-right">Reset</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-
             </div>
-            <!-- /.modal-content -->
+
         </div>
+            <!-- /.modal-content -->
+    </div>
 </div>
 <script>
     //$('')
@@ -203,79 +232,35 @@ function setPermission(){
 }
 function createMenuWithPermission(domId, response){
 if($('#'+domId).length){
-   // console.log($('#'+domId).length);
-       // var t = document.getElementById(domId);
-        // var dom = $('#'+domId);
-        // $(dom).find("tr:gt(0)").remove();
-        // var rowCount = 1;
          var data = response.menu;
          if(data.length){
-            //console.log(data[1]['parent']['childern'][1]);
             var ht="";
             var ul ="";
             for(var i in data){
-            	//if(data[i]['parent']!='undefined'){
-            	//	console.log(data[i]['parent']);
-                ht = "<li class='treeview' id='"+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+"' ><a href='#' onClick='hideAndShow("+data[i]['parent']['menuid']+");'><i class='fa fa-dashboard'></i> <span>"+data[i]['parent']['menu_nameen']+"</span></a></li>";
+                ht = "<li class='treeview' id='"+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+"' ><a href='#' onClick='hideAndShow("+data[i]['parent']['menuid']+");'><input type='checkbox' name='input_"+i+"'> <i class='fa fa-dashboard'></i> <span>"+data[i]['parent']['menu_nameen']+"</span></a></li>";
                 $('#'+domId).append(ht);
                 if(data[i]['parent']['childern']){
-                    $('#'+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+' a').append('<i class="fa fa-angle-left pull-right"></i>');
-                $('#' +data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']).append("<ul class='treeview-menu' id="+data[i]['parent']['menuid']+"></ul>");
+                    $('#'+domId+' #'+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+' a').append('<i class="fa fa-angle-left pull-right"></i>');
+                $('#'+domId+' #' +data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']).append("<ul class='treeview-menu' id="+data[i]['parent']['menuid']+"></ul>");
                 }
-                //}
-                //console.log(data[i]['parent']);
-                //console.log(data[i]['parent']['children']);
                 for(var j in data[i]['parent']['childern']){
-                    //console.log(data[i]['parent']['menu_nameen']);
-                    //console.log(data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']);
-                    // ul = "<li class='treeview' id='"+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+"'><a href='#'><i class='fa fa-plus'></i>"+data[i]['parent']['childern'][j]['menu_nameen']+"</a></li>";
-                //console.log(ul);
-                // if($('#'+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+'#'+data[i]['parent']['menuid']).length){
-                //     console.log($('#'+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+'.first-child').length);
-                // }
-                
                     if(data[i]['parent']['childern'][j]['children']){
-                        ul = "<li class='treeview' id='"+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+"' onClick='hideAndShow("+data[i]['parent']['childern'][j]['menuid']+");'><a href='#'><i class='fa fa-angle-left pull-right'></i>"+data[i]['parent']['childern'][j]['menu_nameen']+"</a></li>";
-                        $('#'+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+' #'+data[i]['parent']['menuid']).append(ul);
-                         $('#' +data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']).append("<ul class='treeview-menu' id="+data[i]['parent']['childern'][j]['menuid']+"></ul>");
-                        // console.log(data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']);
+                        ul = "<li class='treeview' id='"+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+"' onClick='hideAndShow("+data[i]['parent']['childern'][j]['menuid']+");'> <a href='#'><input type='checkbox' name='input_"+i+"'> <i class='fa fa-angle-left pull-right'></i>"+data[i]['parent']['childern'][j]['menu_nameen']+"</a></li>";
+                        $('#'+domId+' #'+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+' #'+data[i]['parent']['menuid']).append(ul);
+                         $('#'+domId+' #' +data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']).append("<ul class='treeview-menu' id="+data[i]['parent']['childern'][j]['menuid']+"></ul>");
                     }
                     else{
-                        console.log($('#'+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+ 'a'));
-                      $('#'+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+ 'a').removeAttr('href');
-                      ul = "<li class='last-li' id='"+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+"'>"+data[i]['parent']['childern'][j]['menu_nameen']+"</li>";
-                      $('#'+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+' #'+data[i]['parent']['menuid']).append(ul);
+                      $('#'+domId+' #'+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+ 'a').removeAttr('href');
+                      ul = "<li class='last-li' id='"+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+"'><input type='checkbox' name='input_"+i+"'> <i class='fa fa-circle-o'></i>"+data[i]['parent']['childern'][j]['menu_nameen']+"</li>";
+                      $('#'+domId+' #'+data[i]['parent']['menu_nameen']+'_'+data[i]['parent']['menuid']+' #'+data[i]['parent']['menuid']).append(ul);
                     }
-                    
-                
-                // $('#' +data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']).append('<ul></ul>');
-
-
                 for(var k in data[i]['parent']['childern'][j]['children']){
                     //console.log(data[i]['parent']['childern'][j]['children'][k]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['children'][k]['menuid']);
-                	subul = "<li class='last-li' id='"+data[i]['parent']['childern'][j]['children'][k]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['children'][k]['menuid']+"'><i class='fa fa-circle-o'></i>"+data[i]['parent']['childern'][j]['children'][k]['menu_nameen']+"</li>";
-                	$('#'+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+' #'+data[i]['parent']['childern'][j]['menuid']).append(subul);
+                	subul = "<li class='last-li' id='"+data[i]['parent']['childern'][j]['children'][k]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['children'][k]['menuid']+"'><input type='checkbox' name='input_"+i+"'> <i class='fa fa-circle-o'></i>"+data[i]['parent']['childern'][j]['children'][k]['menu_nameen']+"</li>";
+                	$('#'+domId+' #'+data[i]['parent']['childern'][j]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['menuid']+' #'+data[i]['parent']['childern'][j]['menuid']).append(subul);
                 }
                 }
                 }
-
-        //           var row = t.insertRow(rowCount);
-                 
-                   
-        //         //row.insertCell().innerHTML[0] = rowCount;
-        //         for(var f in fields){
-        //             row.insertCell(f).innerHTML = getText(data[i],fields[f]); //data[i][fields[f]];
-        //         }
-        //         if(actions!=1 ){
-        //          row.insertCell(fields.length).innerHTML = "<a href='javascript:void(0)' onclick=\"edit('"+data[i][pk]+"')\" class='btn btn-xs btn-primary' title='Edit'><i class='glyphicon glyphicon-edit'></i></a>&nbsp;&nbsp;<a href='javascript:void(0)' onclick=\"delt('"+data[i][pk]+"')\" class='btn btn-xs btn-danger' title='Delete'><i class='glyphicon glyphicon-trash'></i></a>";
-        //         }
-        //         if(sn==1){
-        //             row.insertCell(0).innerHTML= rowCount; 
-        //         }
-        //                         rowCount++;
-
-           // }
-        //     createPagination(response);
          }else{
             console.log('No data provided to list menu.');
         }
@@ -285,21 +270,14 @@ if($('#'+domId).length){
 }
 
 function hideAndShow(id){
-            if($('li #'+id).hasClass('active')){
+    var domId = 'perm-menu';
+    console.log(domId);
+            if($('#'+domId+' li #'+id).hasClass('active')){
                 console.log('hello'+id);
-                $('li #'+id).removeClass('active');
+                $('#'+domId+' li #'+id).removeClass('active');
                 return true;   
         }
-        $('li #'+id).addClass('active');
+        $('#'+domId+' li #'+id).addClass('active');
         return true;
     }
-    // function hideAndShowChild(id){
-    //     if($('li #'+id).hasClass('active')){
-    //             console.log('hello'+id);
-    //             $('li #'+id).removeClass('active');
-    //             return false;   
-    //     }
-    //     $('li #'+id).addClass('active');
-    //     return true;
-    // }
 </script>

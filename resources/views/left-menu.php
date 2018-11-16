@@ -17,8 +17,8 @@
     <div class="row" >
     <section id="main-body" class="content col-lg-12">
 <script type="text/javascript">
-setPermission();
-function setPermission(){
+setLeftMenuPermission();
+function setLeftMenuPermission(){
     var url = "/getmenulist";
     var xhr = ajaxGetObj(url);
     xhr.done(function(response){
@@ -28,5 +28,4 @@ function setPermission(){
         console.log("failed");
     });
 }
-
   </script>
