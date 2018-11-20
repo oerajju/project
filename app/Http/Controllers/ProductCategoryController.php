@@ -126,10 +126,9 @@ class ProductCategoryController extends Controller {
         // }
     }
 
-    public function getSelectOptions() {
-        // $model = new ProductCategory();
-        // $data = $model->getSelectedData(['id', 'name'], 'name', "id,=,1");
-        // return $data;
+    public function getSelectOptions(){
+        $model = ProductCategory::all();
+        return response()->json($model);
     }
 
 }

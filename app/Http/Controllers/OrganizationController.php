@@ -134,9 +134,8 @@ class OrganizationController extends Controller {
     }
 
     public function getSelectOptions() {
-        // $model = new organization();
-        // $data = $model->getSelectedData(['id', 'name'], 'name', "id,=,1");
-        // return $data;
+        $model = Organization::all();
+        return response()->json($model);
     }
 
 }

@@ -263,10 +263,10 @@ $(document).ready(function () {
     //menu plus minus
     //function adsearch(){
     $('.treeview a').on('click', function () {
-        if ($(this).children().hasClass('fa-plus')) {
-            $(this).children('i.fa-plus').removeClass('fa-plus').addClass('fa-minus');
+        if ($(this).children().hasClass('fa-angle-left')) {
+            $(this).children('i.fa-angle-left').removeClass('fa-angle-left').addClass('fa-angle-down');
         } else {
-            $(this).children('i.fa-minus').removeClass('fa-minus').addClass('fa-plus');
+            $(this).children('i.fa-angle-down').removeClass('fa-angle-down').addClass('fa-angle-left');
         }
     });
     

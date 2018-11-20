@@ -129,9 +129,8 @@ class productController extends Controller {
     }
 
     public function getSelectOptions() {
-        // $model = new product();
-        // $data = $model->getSelectedData(['id', 'name'], 'name', "id,=,1");
-        // return $data;
+        $model = Product::all();
+        return response()->json($model);
     }
 
     }
