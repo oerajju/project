@@ -78,6 +78,7 @@ Route::get('/staff-info/list-data','StaffInfoController@listData');
 Route::delete('/staff-info/remove-spec/{id}','StaffInfoController@removeSpecRow');
 Route::resource('/staff-info','StaffInfoController');
 Route::post('/staff-info/staff-spec','StaffInfoController@specRecord');
+Route::get('staff-info/{staffid}/specialization','StaffInfoController@getSpecializationOfStaff');
 
 //Client Organization Type
 Route::get('/client-orgtype/list','ClientOrgTypeController@showList');

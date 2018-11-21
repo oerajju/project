@@ -69,7 +69,7 @@
 					</div>
 					<div class="form-group">
 					  <label for="postid">पद</label>
-					  <select class="form-control" id="postid" name="posid">
+					  <select class="form-control" id="postid" name="postid">
 					  	<option value="">........</option>
 					  	 <?php
 					  	foreach($post as $p){?>
@@ -172,6 +172,7 @@ function formSubmit(e){
     var url = "staff-info";
     if( $('#staffid').val()==""){
         var formData = $("#form").serialize();
+        console.log(formData);
     }else{
        url += "/"+ $('#staffid').val();
 	var formData = $("#form").serialize()+'&_method=PUT';
@@ -179,6 +180,7 @@ function formSubmit(e){
     var xhr = submitFormAjax(url,formData);
     xhr.done(function(resp){
         resetForm($('#form'));
+        $('.spec-tr').remove();
         table();
         toast(resp);
     }).fail(function(reason){
@@ -194,6 +196,8 @@ function specFormSubmit(e){
     var xhr = ajaxPostObj(url,formData);
     xhr.done(function(resp){
     	addSpecRow(resp);
+    	$("#productid").val('');
+    	$("#expertid").val('');
     	console.log(resp);
     }).fail(function(reason){
     	var rsp = reason.responseJSON;
@@ -202,7 +206,17 @@ function specFormSubmit(e){
     });
 }
 function addSpecRow(resp){
-	var html = "<tr id='spec"+resp.id+"'><td>1</td><td>"+resp['product']+"</td><td>"+resp['spec']+"</td><td>"+resp['remarks']+"</td><td><a href='javascript:void(0)' onclick=\"removeSpecRow('"+resp.id+"')\" class='btn btn-xs btn-danger' title='Delete'><i class='glyphicon glyphicon-trash'></i></a></td></tr>";
+	var sn ='';
+	if($('.spec-tr').length){
+		var sn = $('.spec-tr:last-child #sn').map(function() {
+    			return $(this).text();
+				});
+		var rowCount = +sn[0] + 1;
+	}
+	else{
+		var rowCount = 1;
+	}
+	var html = "<tr class='spec-tr' id='spec"+resp.id+"'><input type='hidden' name='specid[]' value='"+resp.id+"' /><td id='sn'>"+rowCount+"</td><td>"+resp['product']+"</td><td>"+resp['spec']+"</td><td>"+(resp['remarks']==null?'': resp['remarks'])+"</td><td><a href='javascript:void(0)' onclick=\"removeSpecRow('"+resp.id+"')\" class='btn btn-xs btn-danger' title='Delete'><i class='glyphicon glyphicon-trash'></i></a></td></tr>";
 	$('#spec-table').append(html);
 }
 function specTable(id){

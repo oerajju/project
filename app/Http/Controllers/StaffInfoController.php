@@ -65,9 +65,16 @@ class StaffInfoController extends Controller {
         //return $request->all();
          $model = new StaffInfo();
         if ($model->validate($request->all())) {
-            $req = $request->except(['_token']);
+            $req = $request->except(['_token','specid']);
             $model->fill($req);
-            $model->save();
+            if($model->save()){
+                foreach($request->input('specid') as $s){
+                    $row =\App\StaffSpecialization::find($s);
+                    $row->staffid =$model->staffid;
+                    $row->save();
+                }
+            }
+
             return response()->json($this->successMessage());
         } else {
             return response()->json($this->errorMessage($model->errors), 500);
@@ -111,8 +118,13 @@ class StaffInfoController extends Controller {
             $model = StaffInfo::find($id);
             $req = $request->except(['staffid', '_token']);
             $model->fill($req);
-            $model->save();
-            // redirect
+            if($model->save()){
+                foreach($request->input('specid') as $s){
+                    $row =\App\StaffSpecialization::find($s);
+                    $row->staffid =$model->staffid;
+                    $row->save();
+                }
+            }
             return response()->json($this->successMessage());
         } else {
             return response()->json($this->errorMessage($model->errors), 500);
@@ -157,6 +169,14 @@ class StaffInfoController extends Controller {
         } else {
             return response()->json($this->errorMessage('Cannot remove item, Try agian later.'));
         }
+    }
+    public function getSpecializationOfStaff($staffid){
+        $data = new \App\StaffSpecialization();
+        $model = \App\StaffSpecialization::where('staffid', $staffid)->get();
+        foreach($model as $m){
+        $data1[] = $data->addedStaffSpec($m);
+        }
+        return $data1;
     }
 
     public function getSelectOptions() {

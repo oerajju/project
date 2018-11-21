@@ -126,7 +126,6 @@
 					  <label for="descriptionnp">व्याख्या(नेपाली)</label>
 					  <input type="text" name='descriptionnp' id='descriptionnp' class="form-control" >
 					</div>
-					<button type="button" data-toggle="modal" data-target="#user-perm">Open Modal</button>
 					<div class="form-group">
 					  <label for="descriptionen">व्याख्या(अङ्ग्रेजी) </label>
 					  <input type="text" name='descriptionen' id='descriptionen' class="form-control" >
@@ -259,7 +258,7 @@ if($('#'+domId).length){
                     var fChildName = data[i]['parent']['childern'][j]['menu_nameen'];
                     var fChildId = data[i]['parent']['childern'][j]['menuid'];
                     if(data[i]['parent']['childern'][j]['children']){
-                        ul = "<li class='treeview' id='"+fChildName+'_'+fChildId+"'> <a href='#' onClick='hideAndShow(\""+ fChildName +'_'+fChildId+"\","+fChildId+");'><input type='checkbox' name='input_"+fChildId+"'> <i class='fa fa-angle-left pull-right'></i>"+fChildName+"</a></li>";
+                        ul = "<li class='treeview' id='"+fChildName+'_'+fChildId+"'> <a href='#' onClick='hideAndShow(\""+ fChildName +'_'+fChildId+"\","+fChildId+");'><input type='checkbox' name='input_"+fChildId+"' onclick ='Parentclick(\""+ parent_nameen +'_'+parent_menuid+"\","+parent_menuid+");'> <i class='fa fa-angle-left pull-right'></i>"+fChildName+"</a></li>";
                         $('#'+domId+' #'+parent_nameen+'_'+parent_menuid+' #'+parent_menuid).append(ul);
                          $('#'+domId+' #' +fChildName+'_'+fChildId).append("<ul class='treeview-menu' id="+fChildId+"></ul>");
                     }
@@ -299,9 +298,11 @@ function hideAndShow(liId, ulId){
 }
 function Parentclick(id, inputid){
     var domId = 'perm-menu';
-    var checked = $('#'+domId+' #'+id+' #input_'+inputid).attr("checked","ON");
-    if(checked){
-        $('#'+domId+' #'+id+' #'+inputid+' li input[type=checkbox]').attr("checked","ON");
+    var attr = $('#'+domId+' #'+id+' #input_'+inputid).attr('checked');
+    if (typeof attr !== typeof undefined && attr !== false) {
+    }
+    else{
+        $('#'+domId+' #'+id+' #input_'+inputid).attr('checked','ON');
         return false;
     }
 }

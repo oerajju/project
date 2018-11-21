@@ -75,11 +75,25 @@ function edit(id){
     var xhr = ajaxGetObj(url);
     xhr.done(function(resp){
         assignValues(resp);
+        getSpecializationOfStaff(resp.staffid);
         //$('#staffid').val(resp.levelid);
     }).fail(function(reason){
         toast({status: "0", title: "error", text: "Error on Fetching Data"});
     });
 
+}
+function getSpecializationOfStaff(staffid){
+    var url = "staff-info";
+    url += "/"+staffid+'/specialization';
+    var xhr = ajaxGetObj(url);
+    xhr.done(function(resp){
+        console.log(resp[0]['product']);
+        addSpecRowEdit(resp);
+        //getSpecializationOfStaff(resp.staffid);
+        //$('#staffid').val(resp.levelid);
+    }).fail(function(reason){
+    $('.spec-tr').remove();
+    });
 }
 function delt(id){
     var url = "staff-info";
@@ -91,6 +105,15 @@ function delt(id){
     }).fail(function(reason){
         console.log("Fail");
     });
+}
+function addSpecRowEdit(resp){
+    var rowCount = 1;
+    for(var i in resp){
+        console.log(resp[i]['spec']);
+    var html = "<tr class='spec-tr' id='spec"+resp[i]['id']+"'><input type='hidden' name='specid[]' value='"+resp[i]['id']+"' /><td>"+ rowCount +"</td><td>"+resp[i]['product']+"</td><td>"+resp[i]['spec']+"</td><td>"+(resp[i]['remarks']==null?'': resp[i]['remarks'])+"</td><td><a href='javascript:void(0)' onclick=\"removeSpecRow('"+resp[i].id+"')\" class='btn btn-xs btn-danger' title='Delete'><i class='glyphicon glyphicon-trash'></i></a></td></tr>";
+    $('#spec-table').append(html);
+    rowCount++;
+}
 }
 table();
 </script>
