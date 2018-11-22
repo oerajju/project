@@ -203,9 +203,9 @@ function resetForm(form) {
     if($('#id').length){
         $('#id').val('');
     }
-    setTimeout(function(){
-        setDefaultOrg();
-    },1);
+    // setTimeout(function(){
+    //     setDefaultOrg();
+    // },1);
 }
 
 // provides object for submitting forms with ajax

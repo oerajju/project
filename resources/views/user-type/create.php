@@ -157,7 +157,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick ="resetList()" >
                     <span aria-hidden="true">×</span>
                 </button>
                 <span class="pull-right">
@@ -184,6 +184,7 @@
                                 <h5 class="box-title">Assign Permission</h5>
                             </div>
                             <form role="form" method="post" id="listform" class="oas-form" onsubmit="SubmitListPermission(event);" >
+                                <input type="hidden" id="usertypeid" name="usertypeid" />
                                 <div class="box-body">
                                     <ul class="sidebar-menu tree col-md-8" id="perm-menu">
                                     
@@ -221,7 +222,6 @@ function formSubmit(e){
         toast(resp);
     }).fail(function(reason){
     	var rsp = reason.responseJSON;
-    	console.log(rsp);
         toast(rsp);
     });
 }
@@ -248,7 +248,7 @@ if($('#'+domId).length){
             for(var i in data){
                 var parent_nameen =data[i]['parent']['menu_nameen'];
                 var parent_menuid = data[i]['parent']['menuid'];
-                ht = "<li class='treeview' id='"+parent_nameen+'_'+parent_menuid+"' ><a href='#'  onClick='hideAndShow(\""+ parent_nameen +'_'+parent_menuid+"\","+parent_menuid+");'><input type='checkbox' id='input_"+parent_menuid+"' name='input_"+parent_menuid+"' onclick ='Parentclick(\""+ parent_nameen +'_'+parent_menuid+"\","+parent_menuid+");'> <i class='fa fa-dashboard'></i> <span>"+parent_nameen+"</span></a></li>";
+                ht = "<li class='treeview' id='"+parent_nameen+'_'+parent_menuid+"' ><a href='#'  onClick='hideAndShow(\""+ parent_nameen +'_'+parent_menuid+"\","+parent_menuid+");'><input type='checkbox' id='input_"+parent_menuid+"' name='menu[]' value='"+parent_menuid+"' onclick ='Parentclick(\""+ parent_nameen +'_'+parent_menuid+"\","+parent_menuid+");'> <i class='fa fa-dashboard'></i> <span>"+parent_nameen+"</span></a></li>";
                 $('#'+domId).append(ht);
                 if(data[i]['parent']['childern']){
                     $('#'+domId+' #'+parent_nameen+'_'+parent_menuid+' a').append("<i class='fa fa-angle-left pull-right'></i>");
@@ -258,20 +258,20 @@ if($('#'+domId).length){
                     var fChildName = data[i]['parent']['childern'][j]['menu_nameen'];
                     var fChildId = data[i]['parent']['childern'][j]['menuid'];
                     if(data[i]['parent']['childern'][j]['children']){
-                        ul = "<li class='treeview' id='"+fChildName+'_'+fChildId+"'> <a href='#' onClick='hideAndShow(\""+ fChildName +'_'+fChildId+"\","+fChildId+");'><input type='checkbox' name='input_"+fChildId+"' onclick ='Parentclick(\""+ parent_nameen +'_'+parent_menuid+"\","+parent_menuid+");'> <i class='fa fa-angle-left pull-right'></i>"+fChildName+"</a></li>";
+                        ul = "<li class='treeview' id='"+fChildName+'_'+fChildId+"'> <a href='#' onClick='hideAndShow(\""+ fChildName +'_'+fChildId+"\","+fChildId+");'><input type='checkbox' id='input_"+fChildId+"' name='menu[]' value='"+fChildId+"' onclick ='firstChildClick(\""+ parent_nameen +'_'+ parent_menuid +"\",\""+ fChildName +'_'+fChildId+"\","+fChildId+");'> <i class='fa fa-angle-left pull-right'></i>"+fChildName+"</a></li>";
                         $('#'+domId+' #'+parent_nameen+'_'+parent_menuid+' #'+parent_menuid).append(ul);
                          $('#'+domId+' #' +fChildName+'_'+fChildId).append("<ul class='treeview-menu' id="+fChildId+"></ul>");
                     }
                     else{
                       $('#'+domId+' #'+fChildName+'_'+fChildId+ 'a').removeAttr('href');
-                      ul = "<li class='last-li' id='"+fChildName+'_'+fChildId+"'><input type='checkbox' name='input_"+i+"'> <i class='fa fa-circle-o'></i>"+fChildName+"</li>";
+                      ul = "<li class='last-li' id='"+fChildName+'_'+fChildId+"'><input type='checkbox' id='input_"+fChildId+"' name='menu[]' value='"+fChildId+"'> <i class='fa fa-circle-o'></i>"+fChildName+"</li>";
                       $('#'+domId+' #'+parent_nameen+'_'+parent_menuid+' #'+parent_menuid).append(ul);
                     }
                 for(var k in data[i]['parent']['childern'][j]['children']){
                     var sChildName = data[i]['parent']['childern'][j]['children'][k]['menu_nameen'];
                     var sChildId = data[i]['parent']['childern'][j]['children'][k]['menuid'];
                     //console.log(data[i]['parent']['childern'][j]['children'][k]['menu_nameen']+'_'+data[i]['parent']['childern'][j]['children'][k]['menuid']);
-                	subul = "<li class='last-li' id='"+sChildName+'_'+sChildId+"'><input type='checkbox' name='input_"+i+"'> <i class='fa fa-circle-o'></i>"+sChildName+"</li>";
+                	subul = "<li class='last-li' id='"+sChildName+'_'+sChildId+"'><input type='checkbox' name='menu[]' value='"+sChildId+"'> <i class='fa fa-circle-o'></i>"+sChildName+"</li>";
                 	$('#'+domId+' #'+fChildName+'_'+fChildId+' #'+fChildId).append(subul);
                 }
                 }
@@ -298,17 +298,51 @@ function hideAndShow(liId, ulId){
 }
 function Parentclick(id, inputid){
     var domId = 'perm-menu';
-    var attr = $('#'+domId+' #'+id+' #input_'+inputid).attr('checked');
-    if (typeof attr !== typeof undefined && attr !== false) {
+    if ($('#'+domId+' #'+id+' #input_'+inputid).attr('checked')){
+        $('#'+domId+' #'+id+' #input_'+inputid).removeAttr('checked');
+        $('#'+domId+' #'+id+' ul li input[type=checkbox]').removeAttr('checked');
+        console.log('wrong');
+        return true;
     }
     else{
-        $('#'+domId+' #'+id+' #input_'+inputid).attr('checked','ON');
-        return false;
+        $('#'+domId+' #'+id+' #input_'+inputid).attr('checked',true);
+        $('#'+domId+' #'+id+' ul li input[type=checkbox]').attr('checked',true);
+        console.log('right');
+        return  true;
+    }
+}
+function firstChildClick(parentid, id, inputid){
+    var domId = 'perm-menu';
+    if ($('#'+domId+' #'+ parentid+' #'+id+' #input_'+inputid).attr('checked','checked')){
+        $('#'+domId+' #'+ parentid+' #'+id+' #input_'+inputid).attr('checked',false);
+        $('#'+domId+' #'+ parentid+' #'+id+' ul li input[type=checkbox]').attr('checked',false);
+        console.log('child wrong');
+        return true;
+    }
+    else{
+        $('#'+domId+' #'+ parentid+' #'+id+' #input_'+inputid).attr('checked',true);
+        $('#'+domId+' #'+ parentid+' #'+id+' ul li input[type=checkbox]').attr('checked',true);
+        console.log('child right');
+        return  true;
     }
 }
 function SubmitListPermission(e){
     e.preventDefault();
+    var url = 'user-type/manage-permission'
     var formData = $("#listform").serialize();
-    console.log(formData);
+    var xhr = submitFormAjax(url,formData);
+    xhr.done(function(resp){
+        //resetForm($('#form'));
+        //table();
+        toast(resp);
+    }).fail(function(reason){
+        var rsp = reason.responseJSON;
+        toast(rsp);
+    });
+}
+function resetList(){
+    console.log('triggered here');
+    $('#perm-menu li').append('');
+    return true;
 }
 </script>

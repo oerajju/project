@@ -34,5 +34,9 @@
 <script src="<?php echo url('assets/jquery/dist/jquery.min.js'); ?>"></script>
 <script src="<?php echo url('js/scripts.js'); ?>" type="text/javascript"></script>
 </script>
+<script type="text/javascript">
+      var gLoader = "loader-animation";
+      var mainContainer="main-body";
+</script>
 </head>
 <body class="hold-transition login-page">

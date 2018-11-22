@@ -28,7 +28,6 @@ $org = (new UserMenus())->getAllMenus();
 <script type="text/javascript">
   var response = <?php echo json_encode($org) ?>;
 createLeftMenuWithPermission('sidebar-menu',response);
-  console.log(response);
 
 function createLeftMenuWithPermission(domId, response){
     if($('.'+domId).length){

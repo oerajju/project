@@ -135,5 +135,15 @@ class UserTypeController extends Controller {
         $data = $model->getAllMenus();
         return response()->json($data);
     }
+    public function managePermission(Request $request){
+        foreach($request->input('menuid') as $m){
+                    $row =new \App\UserMenus();
+                    $row->usertypeid =$request->input('usertypeid');
+                    $row->menuid = $m;
+                    $row->save();
+                }
+                return response()->json($this->successMessage());
+
+    }
 
 }
