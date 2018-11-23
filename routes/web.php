@@ -14,7 +14,7 @@ Route::group(['middleware' => 'loggedin'], function() {
 Route::get('/', function () {
     return view('dashboard');
 });
-Route::get('/getmenulist','UserTypeController@getMenuList');
+Route::get('/getmenulist/{usertypeid}','UserTypeController@getMenuList');
 Route::get('/auth/logout','AuthController@logout');
 
 //Country
@@ -109,6 +109,7 @@ Route::post('/report/get-employee', 'ReportController@getEmployee');
 //User Type
 Route::get('/user-type/list','UserTypeController@showList');
 Route::get('/user-type/list-data','UserTypeController@listData');
+Route::post('/user-type/manage-permission','UserTypeController@managePermission');
 Route::resource('/user-type','UserTypeController');
 
 //Users

@@ -5,7 +5,7 @@
   <?php
 
 use \App\UserMenus;
-$org = (new UserMenus())->getAllMenus();
+$org = (new UserMenus())->getUserMenus();
 ?>
 
     <!-- sidebar: style can be found in sidebar.less -->

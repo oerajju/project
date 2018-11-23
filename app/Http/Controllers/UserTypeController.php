@@ -130,20 +130,22 @@ class UserTypeController extends Controller {
         }
     }
 
-    public function getMenuList() {
+    public function getMenuList($usertypeid) {
         $model = new \App\UserMenus();
-        $data = $model->getAllMenus();
+        $data = $model->getAllMenus($usertypeid);
         return response()->json($data);
     }
     public function managePermission(Request $request){
-        foreach($request->input('menuid') as $m){
+        $usertypeid = $request->input('usertypeid');
+        $model = \App\UserMenus::where('usertypeid', $usertypeid);
+        $model->delete();
+        foreach($request->input('menu') as $m){
                     $row =new \App\UserMenus();
-                    $row->usertypeid =$request->input('usertypeid');
+                    $row->usertypeid =$usertypeid;
                     $row->menuid = $m;
                     $row->save();
                 }
                 return response()->json($this->successMessage());
-
     }
 
 }
