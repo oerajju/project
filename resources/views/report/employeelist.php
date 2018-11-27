@@ -46,8 +46,8 @@
 					  <select class="form-control" id="orgid" name="orgid">
 					  	<option value="">.......</option>
 					  	 <?php
-					  	foreach($org as $o){?>
-					  		<option value="<?php echo $o->orgid; ?>"><?php echo $o->namenp; ?></option>
+					  	foreach($organization as $orgn){?>
+					  		<option value="<?php echo $orgn->orgid;?>"><?php echo $orgn->namenp; ?></option>
 					  <?php } ?> 
 					  </select>
 					</div>

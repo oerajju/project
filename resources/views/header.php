@@ -91,6 +91,9 @@
             
         }
 </script>
+<?php 
+ $details = (new \App\Users())->getUserDetails(session('userid'));
+?>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -116,16 +119,16 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="<?php echo url('img/user1.png'); ?>" class="user-image" alt="User Image">
-              <span class="hidden-xs">नेपाल महर्षि वैदिक फाउंडेशन</span>
+              <span class="hidden-xs"><?php echo $details->orgname; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="img/user1.png" class="img-circle" alt="User Image">
+                <img src="<?php echo url('img/user1.png');?>" class="img-circle" alt="User Image">
 
                 <p>
-                  नेपाल महर्षि वैदिक फाउंडेशन - Admin
-                  <small>Member since Nov. 2012</small>
+                  <?php echo $details->orgname.'-'.$details->staffname; ?>
+                  <!-- <small>Member since Nov. 2012</small> -->
                 </p>
               </li>
               <!-- Menu Footer-->

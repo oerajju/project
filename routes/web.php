@@ -62,6 +62,11 @@ Route::get('/product-category/list','ProductCategoryController@showList');
 Route::get('/product-category/list-data','ProductCategoryController@listData');
 Route::resource('/product-category','ProductCategoryController');
 
+//Product Type
+Route::get('/product-type/list','ProductTypeController@showList');
+Route::get('/product-type/list-data','ProductTypeController@listData');
+Route::resource('/product-type','ProductTypeController');
+
 //Product
 Route::get('/product/list','ProductController@showList');
 Route::get('/product/list-data','ProductController@listData');
@@ -113,16 +118,19 @@ Route::post('/user-type/manage-permission','UserTypeController@managePermission'
 Route::resource('/user-type','UserTypeController');
 
 //Users
+Route::put('users/update-change-password/{userid}','UsersController@storeChangePassword');
 Route::get('/users/list','UsersController@showList');
 Route::get('/users/list-data','UsersController@listData');
+Route::get('users/change-password','UsersController@changePasswordIndex');
 Route::resource('/users','UsersController');
+
+Route::get('/menusetup/list','MenuSetupController@showList');
+Route::get('menusetup/list-data','MenuSetupController@listData');
+Route::resource('/menusetup','MenuSetupController');
 });
 Route::group(['middleware' => 'loggedout'], function() {
 
 Route::get('/auth','AuthController@index');
 Route::post('/auth/login','AuthController@login');
 
-Route::get('/menusetup/list','MenuSetupController@showList');
-Route::get('menusetup/list-data','MenuSetupController@listData');
-Route::resource('/menusetup','MenuSetupController');
 });

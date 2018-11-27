@@ -1,7 +1,7 @@
 
 <div class="box col-md-6">
                     <div class="box-header with-border">
-                        <h3 class="box-title">List of Staff Information</h3>
+                        <h3 class="box-title">List of Product Type</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -31,8 +31,8 @@
                             <table id="country-table" class="table table-striped table-bordered">
                                 <tr>
                                   <th>S.N.</th>
-                                  <th>post</th>
-                                  <th>सँस्थाको प्रकार</th>
+                                  <th>Name(English)</th>
+                                  <th>Name(Nepali)</th>
                                   <th>कार्यहरु</th>
                                 </tr>
 							  
@@ -46,7 +46,7 @@
 <script>
     
 function table(){
-    var url = "staff-info";
+    var url = "product-type";
     url += "/list-data";
     var entry = $("#selectentry").val() || '';
     var search = $("#searchfill").val() || '';
@@ -66,37 +66,23 @@ function searchClicked(e){
 }
 
 function createTable(resp){
-    createDataTable('country-table',resp,['postnamenp','nameen'],'staffid',0,1);
+    createDataTable('country-table',resp,['nameen','namenp'],'ptid',0,1);
 }
 
 function edit(id){
-    var url = "staff-info";
+    var url = "product-type";
     url += "/"+id+'/edit';
     var xhr = ajaxGetObj(url);
     xhr.done(function(resp){
         assignValues(resp);
-        getSpecializationOfStaff(resp.staffid);
-        //$('#staffid').val(resp.levelid);
+        //$('#pcid').val(resp.levelid);
     }).fail(function(reason){
         toast({status: "0", title: "error", text: "Error on Fetching Data"});
     });
 
 }
-function getSpecializationOfStaff(staffid){
-    var url = "staff-info";
-    url += "/"+staffid+'/specialization';
-    var xhr = ajaxGetObj(url);
-    xhr.done(function(resp){
-        console.log(resp[0]['product']);
-        addSpecRowEdit(resp);
-        //getSpecializationOfStaff(resp.staffid);
-        //$('#staffid').val(resp.levelid);
-    }).fail(function(reason){
-    $('.spec-tr').remove();
-    });
-}
 function delt(id){
-    var url = "staff-info";
+    var url = "product-type";
     url += "/"+id;
     var xhr = deleteData(url);
     xhr.done(function(resp){
@@ -105,15 +91,6 @@ function delt(id){
     }).fail(function(reason){
         console.log("Fail");
     });
-}
-function addSpecRowEdit(resp){
-    var rowCount = 1;
-    for(var i in resp){
-        console.log(resp[i]['spec']);
-    var html = "<tr class='spec-tr' id='spec"+resp[i]['id']+"'><input type='hidden' name='specid[]' value='"+resp[i]['id']+"' /><td>"+ rowCount +"</td><td>"+resp[i]['product']+"</td><td>"+resp[i]['spec']+"</td><td>"+(resp[i]['remarks']==null?'': resp[i]['remarks'])+"</td><td><a href='javascript:void(0)' onclick=\"removeSpecRow('"+resp[i].id+"')\" class='btn btn-xs btn-danger' title='Delete'><i class='glyphicon glyphicon-trash'></i></a></td></tr>";
-    $('#spec-table').append(html);
-    rowCount++;
-}
 }
 table();
 </script>

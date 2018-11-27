@@ -18,6 +18,9 @@ class Organization extends BaseModel
             'vdc'=>'required|string',
             'wardno'=>'required|string',
 	];
+	function getOrgName($orgid){
+		return Organization::find($orgid)->namenp;
+	}
         
 }
 

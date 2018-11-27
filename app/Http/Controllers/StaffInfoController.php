@@ -32,9 +32,9 @@ class StaffInfoController extends Controller {
             $page = 1;
         }
         if ($search == null) {
-            $rwrd = DB::table($model->getTable())->paginate($entry, ['*'], 'page', $page);
+            $rwrd = DB::table($model->getTable().' as si')->select(['si.staffid','si.nameen','si.namenp','p.nameen as postnameen','p.namenp as postnamenp'])->join('post as p','p.pid','=','si.postid')->paginate($entry, ['*'], 'page', $page);
         } else {
-            $rwrd = DB::table($model->getTable())->where('nameen', 'LIKE', "%$search%")->orwhere('cid', 'LIKE', "%$search%")->orwhere('namenp', 'LIKE', "%$search%")->orwhere('code', 'LIKE', "%$search%")->paginate($entry, ['*'], 'page', $page);
+            $rwrd = DB::table($model->getTable().' as si')->select(['si.staffid','si.nameen','si.namenp','p.nameen as postnameen','p.namenp as postnamenp'])->join('post as p','p.pid','=','si.postid')->where('si.nameen', 'LIKE', "%$search%")->orwhere('si.namenp', 'LIKE', "%$search%")->orwhere('p.namenp', 'LIKE', "%$search%")->paginate($entry, ['*'], 'page', $page);
         }
         return $rwrd;
     }
@@ -180,9 +180,25 @@ class StaffInfoController extends Controller {
     }
 
     public function getSelectOptions() {
-        // $model = new StaffInfo();
-        // $data = $model->getSelectedData(['id', 'name'], 'name', "id,=,1");
-        // return $data;
+         $model = new Staffinfo();
+         $data = DB::table($model->getTable().' as si')->select(['si.staffid','si.nameen as staffnameen','si.namenp as staffnamenp','si.orgid','org.nameen','org.namenp'])->join('organization_str as org','org.orgid','=','si.orgid')->get();
+         return response()->json($data);
     }
+    public function specPersonRecord(Request $request) {
+        $model = new \App\ResourcePersonResp();
+        if ($model->validate($request->all())) {
+            $req = $request->except(['_token']);
+            $model->fill($req);
+            if($model->save()){
+                $data = new \App\ResourcePersonResp();
+                $data = $data->addedRePerResp($model);
+            }
+            return response()->json($data);
+        } else {
+            return response()->json($this->errorMessage($model->errors), 500);
+            //return response()->json(['status'=>'error','title'=>t_label('Error'),'text'=>t_message('Cannot save data')],500);
+        }
+    }
+
 
 }

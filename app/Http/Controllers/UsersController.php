@@ -9,6 +9,7 @@ use App\StaffInfo;
 use App\UserType;
 use DB;
 use Hash;
+use Session;
 class UsersController extends Controller {
 
     /**
@@ -34,9 +35,9 @@ class UsersController extends Controller {
             $page = 1;
         }
         if ($search == null) {
-            $rwrd = DB::table($model->getTable().' as u')->select(['u.userid as userid','u.username as username','ut.nameen as usertype'])->join('user_type as ut','ut.utid','=','u.userid')->paginate($entry, ['*'], 'page', $page);
+            $rwrd = DB::table($model->getTable().' as u')->select(['u.userid as userid','u.username as username','ut.nameen as usertype'])->join('user_type as ut','ut.utid','=','u.usertypeid')->paginate($entry, ['*'], 'page', $page);
         } else {
-            $rwrd = DB::table('$model->getTable() as u')->join('user_type as ut','ut.utid','=','u.userid')->where('u.username', 'LIKE', "%$search%")->orwhere('ut.usertype', 'LIKE', "%$search%")->paginate($entry, ['*'], 'page', $page);
+            $rwrd = DB::table('$model->getTable() as u')->join('user_type as ut','ut.utid','=','u.usertypeid')->where('u.username', 'LIKE', "%$search%")->orwhere('ut.usertype', 'LIKE', "%$search%")->paginate($entry, ['*'], 'page', $page);
         }
         return $rwrd;
     }
@@ -143,6 +144,22 @@ class UsersController extends Controller {
         // $model = new Users();
         // $data = $model->getSelectedData(['id', 'name'], 'name', "id,=,1");
         // return $data;
+    }
+    public function changePasswordIndex(){
+        $users = (new Users())->getUserDetails(session('userid'));
+        return view('users.changepassword')->with('users', $users);
+    }
+    public function storeChangePassword($userid,Request $request){
+        $users = Users::find($userid);
+        $hash_password = Hash::make($request->input('new_password'));
+        //return $hash_password;
+        if(Hash::check($request->input('cur_password'), $users->password)){
+            $users->password = $hash_password;
+            $users->save();
+            return response()->json($this->successMessage('Password successfully changed.'));
+        }else {
+            return response()->json($this->errorMessage('Wrong Current Password!!'),500);
+        }
     }
 
 }

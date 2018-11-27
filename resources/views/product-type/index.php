@@ -3,8 +3,8 @@
     include(resource_path().'/views/left-menu.php');
  endif; ?>
 <div class="row">
-    <div id="first-content-section" class="col-md-5" data-page-part="menusetup/create"></div>
-    <div id="second-content-section" class="col-md-7" data-page-part="menusetup/list"></div>
+    <div id="first-content-section" class="col-md-6" data-page-part="product-type/create"></div>
+    <div id="second-content-section" class="col-md-6" data-page-part="product-type/list"></div>
 </div>
 <?php if(!request()->ajax()):
  include(resource_path().'/views/footer.php');

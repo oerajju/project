@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\OrgType;
+use App\ProductType;
 use DB;
-class OrgTypeController extends Controller {
+class ProductTypeController extends Controller {
 
     /**
      * Display a listing of the resource.
@@ -13,15 +13,15 @@ class OrgTypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('org-type.index');
+        return view('product-type.index');
         }
 
     public function showList(Request $request){
-        return view('org-type.list');
+        return view('product-type.list');
     }
 
     public function listData(Request $request) {
-        $model = new OrgType();
+        $model = new ProductType();
         $entry = $request->input("entry");
         $search = $request->input("search", null);
         $page = $request->input("page", null);
@@ -32,7 +32,7 @@ class OrgTypeController extends Controller {
         if ($search == null) {
             $rwrd = DB::table($model->getTable())->paginate($entry, ['*'], 'page', $page);
         } else {
-            $rwrd = DB::table($model->getTable())->where('nameen', 'LIKE', "%$search%")->orwhere('cid', 'LIKE', "%$search%")->orwhere('namenp', 'LIKE', "%$search%")->orwhere('code', 'LIKE', "%$search%")->paginate($entry, ['*'], 'page', $page);
+            $rwrd = DB::table($model->getTable())->where('nameen', 'LIKE', "%$search%")->orwhere('ptid', 'LIKE', "%$search%")->orwhere('namenp', 'LIKE', "%$search%")->paginate($entry, ['*'], 'page', $page);
         }
         return $rwrd;
     }
@@ -43,7 +43,7 @@ class OrgTypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('org-type.create');
+        return view('product-type.create');
     }
 
     /**
@@ -54,7 +54,7 @@ class OrgTypeController extends Controller {
      */
     public function store(Request $request) {
         //return $request->all();
-         $model = new OrgType();
+         $model = new ProductType();
         if ($model->validate($request->all())) {
             $req = $request->except(['_token']);
             $model->fill($req);
@@ -73,9 +73,9 @@ class OrgTypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        // $model = AdmType::find($id);
-        // return view('admtype.show')
-        //                 ->with('admtype', $model);
+        // $model = ProductCategory::find($id);
+        // return view('ProductCategory.show')
+        //                 ->with('ProductCategory', $model);
     }
 
     /**
@@ -85,7 +85,7 @@ class OrgTypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-         $model = OrgType::find($id);
+         $model = ProductType::find($id);
          return response()->json($model);
     }
 
@@ -97,9 +97,9 @@ class OrgTypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        $model = new OrgType();
+        $model = new ProductType();
         if ($model->validate($request->except(['id']))) {
-            $model = OrgType::find($id);
+            $model = ProductType::find($id);
             $req = $request->except(['id', '_token']);
             $model->fill($req);
             $model->save();
@@ -118,18 +118,17 @@ class OrgTypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $model = OrgType::find($id);
-        if ($model->delete()) {
-            return response()->json($this->successMessage('Item deleted successfully.'));
-        } else {
-            return response()->json($this->errorMessage('Cannot remove item, Try agian later.'));
-        }
+        // $model = ProductCategory::find($id);
+        // if ($model->delete()) {
+        //     return response()->json($this->successMessage('Item deleted successfully.'));
+        // } else {
+        //     return response()->json($this->errorMessage('Cannot remove item, Try agian later.'));
+        // }
     }
 
-    public function getSelectOptions() {
-        // $model = new AdmType();
-        // $data = $model->getSelectedData(['id', 'name'], 'name', "id,=,1");
-        // return $data;
+    public function getSelectOptions(){
+        $model = ProductType::all();
+        return response()->json($model);
     }
 
 }
