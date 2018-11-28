@@ -173,10 +173,28 @@ class StaffInfoController extends Controller {
     public function getSpecializationOfStaff($staffid){
         $data = new \App\StaffSpecialization();
         $model = \App\StaffSpecialization::where('staffid', $staffid)->get();
+        if($model != '[]'){
         foreach($model as $m){
         $data1[] = $data->addedStaffSpec($m);
         }
-        return $data1;
+        }
+        else{
+            return [];
+        }
+        return response()->json($data1);
+    }
+    public function getResPersonResp($staffid){
+        $data = new \App\StaffSpecialization();
+        $model = \App\StaffSpecialization::where('staffid', $staffid)->get();
+        if($model != '[]'){
+        foreach($model as $m){
+        $data1[] = $data->addedResPerResp($m);
+        }
+        }
+        else{
+            return [];
+        }
+        return response()->json($data1);
     }
 
     public function getSelectOptions() {

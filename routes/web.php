@@ -108,6 +108,7 @@ Route::resource('/focal-person','FocalPersonController');
 //Report List
 Route::get('/report/employee-list','ReportController@employeeList');
 Route::get('/report/participant-list','ReportController@participantList');
+Route::post('/report/search-participant-list','ReportController@searchParticipantList');
 Route::get('/report/participant-count', 'ReportController@participantCount');
 Route::post('/report/get-employee', 'ReportController@getEmployee');
 

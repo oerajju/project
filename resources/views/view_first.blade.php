@@ -28,12 +28,13 @@
 
 <span>नेमवैफा</span><br/> 
 <span>नेपाल महर्षि वैदिक फाउंडेशन</span> <br/>
-<span>कर्मचारी सूचि</span> <br/>
+<span>{{$reportname}}</span> <br/>
 <span class="pull-left">कार्यालय: {{$orgname}}</span><br/><br/>
 @if(!empty($staff)) 
 <table id="employee-list" class="table table-striped table-bordered" align="center">
 <thead>
     <tr>
+    	<th>S.N.</th>
 	    @foreach ($staff as $k =>$v)
 	    @foreach ($v as $m =>$w)
 	    @if($k==0)
@@ -46,6 +47,7 @@
 <tbody>
 	@foreach ($staff as $k =>$v)
     <tr>
+    	<td>{{$k+1}}</td>
     	@foreach ($v as $m =>$w)
 		<td>{{$w}}</td>
 		@endforeach

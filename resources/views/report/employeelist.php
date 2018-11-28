@@ -3,7 +3,7 @@
     include(resource_path().'/views/left-menu.php');
  endif; ?>
  <style>
- #first-content-section{
+ #second-content-section{
  	padding-top:8%;
  	padding-left:10%;
  	margin-left:20%;
@@ -33,7 +33,7 @@
 <!-- <div class="header with-border">
 <h3 class="title">Generate Employee Report</h3>
 </div> -->
-	<div id="first-content-section" class="col-md-5">
+	<div id="second-content-section" class="col-md-7">
 		<div class="box">
 				<div class="box-header with-border">
                                     <h3 class="box-title">कर्मचारी सूचि</h3>

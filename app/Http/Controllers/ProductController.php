@@ -132,5 +132,8 @@ class productController extends Controller {
         $model = Product::all();
         return response()->json($model);
     }
-
+    public function getProductFromProductGroup($pcid){
+        $data = DB::table('product')->select(['pid','product_name'])->where('pcid', $pcid)->get();
+        return $data;
     }
+}

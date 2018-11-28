@@ -83,6 +83,7 @@ function edit(id){
 
 }
 function getSpecializationOfStaff(staffid){
+    $('.spec-tr').remove();
     var url = "staff-info";
     url += "/"+staffid+'/specialization';
     var xhr = ajaxGetObj(url);

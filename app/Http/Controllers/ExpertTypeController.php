@@ -128,9 +128,8 @@ class ExpertTypeController extends Controller {
     }
 
     public function getSelectOptions() {
-        // $model = new ExpertType();
-        // $data = $model->getSelectedData(['id', 'name'], 'name', "id,=,1");
-        // return $data;
+        $model = ExpertType::select(['etid as id','namenp as spec'])->get();
+        return $model;
     }
 
 }
